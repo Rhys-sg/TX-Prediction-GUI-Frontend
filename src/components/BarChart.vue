@@ -95,6 +95,10 @@ export default {
         barThickness: 11,
       }];
     }
+  },
+  mounted() {
+    // Ensure initial chart data setup
+    this.updateChartData();
   }
 }
 </script>
