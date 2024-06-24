@@ -37,6 +37,10 @@ export default {
   },
   data() {
     return {
+      chartData: {
+        labels: ['Predicted', 'Observed'],
+        datasets: []
+      },
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
@@ -69,33 +73,27 @@ export default {
       }
     }
   },
-  computed: {
-    chartData() {
-      // Log to check props
-      console.log('predicted_TX:', this.predicted_TX);
-      console.log('observed_TX:', this.observed_TX);
-
-      // Check if both props have valid values
-      if (typeof this.predicted_TX !== 'undefined' && typeof this.observed_TX !== 'undefined') {
-        return {
-          labels: ['Predicted', 'Observed'],
-          datasets: [{
-            data: [this.predicted_TX, this.observed_TX],
-            backgroundColor: [this.predicted_TX_color, this.observed_TX_color],
-            barThickness: 11,
-          }]
-        };
-      } else {
-        // Return default or placeholder data if props are not ready
-        return {
-          labels: ['Predicted', 'Observed'],
-          datasets: [{
-            data: [0, 0], // Example placeholder values
-            backgroundColor: ['#747475', '#747475'], // Example colors
-            barThickness: 11,
-          }]
-        };
-      }
+  watch: {
+    predicted_TX: {
+      handler(newValue) {
+        this.updateChartData();
+      },
+      immediate: true
+    },
+    observed_TX: {
+      handler(newValue) {
+        this.updateChartData();
+      },
+      immediate: true
+    }
+  },
+  methods: {
+    updateChartData() {
+      this.chartData.datasets = [{
+        data: [this.predicted_TX, this.observed_TX],
+        backgroundColor: [this.predicted_TX_color, this.observed_TX_color],
+        barThickness: 11,
+      }];
     }
   }
 }
