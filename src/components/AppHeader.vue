@@ -16,7 +16,7 @@
 
         <!-- Right-aligned content -->
         <v-col class="d-flex justify-end" cols="auto" style="margin-right: -128px;">
-          <v-btn icon="mdi-account" size="small"></v-btn>
+          <v-btn @click="$emit('user-login')" icon="mdi-account" size="small"></v-btn>
           <v-btn icon="mdi-cog" size="small" style="margin-left: 8px;"></v-btn>
           <v-btn icon="mdi-download" size="small" style="margin-left: 8px;"  @click="takeScreenshot"></v-btn>
         </v-col>

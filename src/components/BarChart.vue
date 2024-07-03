@@ -37,10 +37,6 @@ export default {
   },
   data() {
     return {
-      chartData: {
-        labels: ['Predicted', 'Observed'],
-        datasets: []
-      },
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
@@ -73,32 +69,17 @@ export default {
       }
     }
   },
-  watch: {
-    predicted_TX: {
-      handler(newValue) {
-        this.updateChartData();
-      },
-      immediate: true
-    },
-    observed_TX: {
-      handler(newValue) {
-        this.updateChartData();
-      },
-      immediate: true
+  computed: {
+    chartData() {
+      return {
+        labels: ['Predicted', 'Observed'],
+        datasets: [{
+          data: [this.predicted_TX, this.observed_TX],
+          backgroundColor: [this.predicted_TX_color, this.observed_TX_color],
+          barThickness: 11,
+        }]
+      }
     }
-  },
-  methods: {
-    updateChartData() {
-      this.chartData.datasets = [{
-        data: [this.predicted_TX, this.observed_TX],
-        backgroundColor: [this.predicted_TX_color, this.observed_TX_color],
-        barThickness: 11,
-      }];
-    }
-  },
-  mounted() {
-    // Ensure initial chart data setup
-    this.updateChartData();
   }
 }
 </script>

@@ -1,5 +1,7 @@
 <template>
-  <AppHeader @new-input="newInputActive" /> <!-- Really should be in App.vue, but putting it here makes popups easier -->
+  <AppHeader
+  @new-input="newInputActive"
+  @user-login="userLoginActive"/> <!-- Really should be in App.vue, but putting it here makes popups easier -->
 
   <!-- Center Interface -->
   <v-container class="fill-height d-flex justify-center align-center">
@@ -358,6 +360,11 @@
           </template>
         </v-dialog>
 
+        <!-- User Login -->
+        <v-dialog v-model="isUserLogin">
+          <UserLogin></UserLogin>
+        </v-dialog>
+
       </v-card>
     </v-responsive>
   </v-container>
@@ -368,6 +375,7 @@
 <script>
 import BarChart from './BarChart'
 import TextInput from './TextInput'
+import UserLogin from './UserLogin'
 import axios from 'axios'
 
 export default {
@@ -406,6 +414,7 @@ export default {
     var currentPromoterSequence = '';
     var isLigateActive = false;
     var isNewInputActive = false;
+    var isUserLogin = false;
 
     return {
       lines: Array.from({ length: 51 }),
@@ -426,6 +435,7 @@ export default {
       currentPromoterSequence: currentPromoterSequence,
       isLigateActive: isLigateActive,
       isNewInputActive: isNewInputActive,
+      isUserLogin: isUserLogin,
     
       // Input variables
       isLigateValid: false,
@@ -545,6 +555,7 @@ export default {
           codingStrand: this.currentPromoterSequence
         });
         this.predicted_TX = response.data.prediction;
+        console.log(this.predicted_TX);
       } catch (error) {
         console.error('An error occurred.', error);
       }
@@ -558,6 +569,7 @@ export default {
         this.observedTXEntries = response.data.entries;
         this.averageObservedTX = this.getAverageFromEntryData(this.observedTXEntries)
         this.observed_TX = this.averageObservedTX;
+        console.log(this.observed_TX);
       } catch (error) {
         console.error('An error occurred.', error);
       }
@@ -577,6 +589,10 @@ export default {
 
     newInputActive () {
       this.isNewInputActive = true;
+    },
+
+    userLoginActive () {
+      this.isUserLogin = true;
     },
 
     addInputSet() {
