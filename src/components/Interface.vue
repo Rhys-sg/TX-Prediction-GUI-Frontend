@@ -384,6 +384,7 @@ export default {
     sectionName: String
   },
   data() {
+    const backendUrl = process.env.VUE_APP_BACKEND_URL;
     var upstreamUpperOverhang = 'CGAC';
     var inSituUpperPromoterSequence = 'TCCGGGCGCTATCATGCCATACCGCGAAAGGTTTTGCACCATTCGT';
     var inSituLowerPromoterSequence = 'AGGCCCGCGATAGTACGGTATGGCGCTTTCCAAAACGTGGTAAGCA';
@@ -551,7 +552,7 @@ export default {
     
     async makePrediction() {
       try {
-        const response = await axios.post('http://localhost:5000/get_prediction', {
+        const response = await axios.post(`${backendUrl}/get_prediction`, {
           codingStrand: this.currentPromoterSequence
         });
         this.predicted_TX = response.data.prediction;
@@ -563,7 +564,7 @@ export default {
 
     async queryObervedTX() {
       try {
-        const response = await axios.post('http://localhost:5000/query_Oberved_TX', {
+        const response = await axios.post(`${backendUrl}/query_Oberved_TX`, {
           codingStrand: this.currentPromoterSequence
         });
         this.observedTXEntries = response.data.entries;
@@ -620,7 +621,7 @@ export default {
 
     async insertObservedTX() {
       try {
-        const response = await axios.post('http://localhost:5000/insert_observed_TX', {
+        const response = await axios.post(`${backendUrl}/insert_observed_TX`, {
           students: this.inputSets,
           codingStrand: this.inputPromoterSequence,
           TX: this.inputObservedTX,
@@ -645,7 +646,7 @@ export default {
 
     async insertSimulatedLigation() {
       try {
-        const response = await axios.post('http://localhost:5000/insert_simulated_ligation', {
+        const response = await axios.post(`${backendUrl}/insert_simulated_ligation`, {
           groupName: this.groupName,
           students: this.ligateStudents,
           codingStrand: this.inputPromoterSequence,
