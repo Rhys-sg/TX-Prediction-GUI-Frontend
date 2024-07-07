@@ -384,7 +384,7 @@ export default {
     sectionName: String
   },
   data() {
-    const backendUrl = 'https://tx-prediction-gui-backend.onrender.com/';
+    const backendUrl = 'https://tx-prediction-gui-backend.onrender.com';
     var upstreamUpperOverhang = 'CGAC';
     var inSituUpperPromoterSequence = 'TCCGGGCGCTATCATGCCATACCGCGAAAGGTTTTGCACCATTCGT';
     var inSituLowerPromoterSequence = 'AGGCCCGCGATAGTACGGTATGGCGCTTTCCAAAACGTGGTAAGCA';
