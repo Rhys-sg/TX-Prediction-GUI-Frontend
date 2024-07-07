@@ -384,7 +384,7 @@ export default {
     sectionName: String
   },
   data() {
-    const backendUrl = process.env.BACKEND_URL;;
+    const backendUrl = process.env.VUE_APP_BACKEND_URL;;
     var upstreamUpperOverhang = 'CGAC';
     var inSituUpperPromoterSequence = 'TCCGGGCGCTATCATGCCATACCGCGAAAGGTTTTGCACCATTCGT';
     var inSituLowerPromoterSequence = 'AGGCCCGCGATAGTACGGTATGGCGCTTTCCAAAACGTGGTAAGCA';
