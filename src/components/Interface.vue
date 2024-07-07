@@ -168,12 +168,12 @@
                 style="width: 175px; height: 155px; background-color: #FFFFFF;"
               >
                 
-                <BarChart 
-                  :predicted_TX="predicted_TX" 
-                  :observed_TX="observed_TX"
-                  predicted_TX_color="#747475"
-                  observed_TX_color="#747475"
-                />
+              <BarChart 
+                :predicted_TX="predicted_TX || 0" 
+                :observed_TX="observed_TX || 0"
+                predicted_TX_color="#747475"
+                observed_TX_color="#747475"
+              />
               </v-card>
             </v-card>           
           </v-col>
