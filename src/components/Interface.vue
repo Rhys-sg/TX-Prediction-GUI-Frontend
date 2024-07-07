@@ -534,7 +534,7 @@ export default {
 
     // Insert pClone-Promoter_lac.pdf promoter
     insert_default() {
-      console.log('Backend URL:', process.env.VUE_APP_BACKEND_URL);
+      console.log('Backend URL:', this.backendUrl);
       if (!this.isCut) { 
         return; 
       }
