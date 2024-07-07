@@ -534,6 +534,7 @@ export default {
 
     // Insert pClone-Promoter_lac.pdf promoter
     insert_default() {
+      console.log(this.backendUrl);
       if (!this.isCut) { 
         return; 
       }
