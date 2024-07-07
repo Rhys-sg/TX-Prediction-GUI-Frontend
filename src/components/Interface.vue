@@ -384,7 +384,7 @@ export default {
     sectionName: String
   },
   data() {
-    const backendUrl = process.env.VUE_APP_BACKEND_URL;
+    const backendUrl = 'https://tx-prediction-gui-backend.onrender.com/';
     var upstreamUpperOverhang = 'CGAC';
     var inSituUpperPromoterSequence = 'TCCGGGCGCTATCATGCCATACCGCGAAAGGTTTTGCACCATTCGT';
     var inSituLowerPromoterSequence = 'AGGCCCGCGATAGTACGGTATGGCGCTTTCCAAAACGTGGTAAGCA';
@@ -628,7 +628,7 @@ export default {
           codingStrand: this.inputPromoterSequence,
           TX: this.inputObservedTX,
           Notes: this.inputNotes,
-        })
+        });
         console.log(response.data.success);
       } catch (error) {
         console.error('An error occurred.', error)
