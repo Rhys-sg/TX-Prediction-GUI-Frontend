@@ -361,8 +361,8 @@
         </v-dialog>
 
         <!-- User Login -->
-        <v-dialog v-model="isUserLogin">
-          <UserLogin></UserLogin>
+        <v-dialog v-model="isUserLoginActive">
+          <UserLogin @close="isUserLoginActive = false" />
         </v-dialog>
 
       </v-card>
