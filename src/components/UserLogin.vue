@@ -111,14 +111,15 @@
 import axios from 'axios'
 
 export default {
-  props: {
-    backendUrl: {
-      type: String,
-      required: true
-    },
-  },
+  // props: {
+  //   backendUrl: {
+  //     type: String,
+  //     required: true
+  //   },
+  // },
   data() {
     return {
+      backendUrl: 'https://tx-prediction-gui-backend.onrender.com',
       isLogin: true,
       fullName: '',
       email: '',
