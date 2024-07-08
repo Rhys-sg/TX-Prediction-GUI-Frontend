@@ -362,7 +362,10 @@
 
         <!-- User Login -->
         <v-dialog v-model="isUserLoginActive">
-          <UserLogin @close="isUserLoginActive = false" />
+          <UserLogin
+            :backendUrl="backendUrl"
+            @close="isUserLoginActive = false"
+          />
         </v-dialog>
 
       </v-card>
