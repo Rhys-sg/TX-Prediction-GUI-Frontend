@@ -410,6 +410,8 @@ export default {
     var promoterDirectionDegree = 0;
     var defaultUpdater = false;
     var blankUpdater = true;
+    var predicted_TX = 0;
+    var observed_TX = 0;
     var currentPromoterSequence = '';
     var isLigateActive = false;
     var isNewInputActive = false;
@@ -430,8 +432,8 @@ export default {
       promoterDirectionDegree: promoterDirectionDegree,
       defaultUpdater: defaultUpdater,
       blankUpdater: blankUpdater,
-      predicted_TX: null,
-      observed_TX: null,
+      predicted_TX: predicted_TX,
+      observed_TX: observed_TX,
       currentPromoterSequence: currentPromoterSequence,
       isLigateActive: isLigateActive,
       isNewInputActive: isNewInputActive,
@@ -476,11 +478,6 @@ export default {
     };
   },
   methods: {
-    async fetchData() {
-      await this.makePrediction();
-      await this.queryObervedTX();
-    },
-
     cut() {
       // Only cut once
       if (this.isCut){
@@ -700,10 +697,7 @@ export default {
       }
       return complements;
     },
-  },
-  mounted() {
-    this.fetchData(); // Call fetchData when component is mounted
-  },
+  }
 };
 </script>
 

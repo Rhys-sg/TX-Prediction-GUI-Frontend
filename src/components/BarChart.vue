@@ -66,23 +66,19 @@ export default {
             display: false
           }
         }
-      },
-      chartData: null // Initialize as null initially
+      }
     }
   },
-  mounted() {
-    this.updateChartData();
-  },
-  methods: {
-    updateChartData() {
-      this.chartData = {
+  computed: {
+    chartData() {
+      return {
         labels: ['Predicted', 'Observed'],
         datasets: [{
           data: [this.predicted_TX, this.observed_TX],
           backgroundColor: [this.predicted_TX_color, this.observed_TX_color],
           barThickness: 11,
         }]
-      };
+      }
     }
   }
 }
