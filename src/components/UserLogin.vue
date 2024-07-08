@@ -119,7 +119,6 @@ export default {
   },
   data() {
     return {
-      backendUrl: backendUrl,
       isLogin: true,
       fullName: '',
       email: '',
