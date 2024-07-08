@@ -363,7 +363,7 @@
         <!-- User Login -->
         <v-dialog v-model="isUserLoginActive">
           <UserLogin
-            :backendUrl="this.backendUrl"
+            :backendUrl="backendUrl"
             @close="isUserLoginActive = false"
           />
         </v-dialog>
