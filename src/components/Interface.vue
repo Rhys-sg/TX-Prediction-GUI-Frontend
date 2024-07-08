@@ -418,7 +418,7 @@ export default {
     var currentPromoterSequence = '';
     var isLigateActive = false;
     var isNewInputActive = false;
-    var isUserLogin = false;
+    var isUserLoginActive = false;
 
     return {
       backendUrl: backendUrl,
@@ -440,7 +440,7 @@ export default {
       currentPromoterSequence: currentPromoterSequence,
       isLigateActive: isLigateActive,
       isNewInputActive: isNewInputActive,
-      isUserLogin: isUserLogin,
+      isUserLoginActive: isUserLoginActive,
     
       // Input variables
       isLigateValid: false,
@@ -597,7 +597,7 @@ export default {
     },
 
     userLoginActive () {
-      this.isUserLogin = true;
+      this.isUserLoginActive = true;
     },
 
     addInputSet() {
