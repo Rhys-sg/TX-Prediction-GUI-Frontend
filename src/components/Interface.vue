@@ -368,11 +368,19 @@
           />
         </v-dialog>
 
+        <!-- Student Ligation Database -->
+        <v-dialog v-model="isViewStudentLigationsActive">
+          <StudentLigations
+            :backendUrl="backendUrl"
+            @close="isViewStudentLigationsActive = false"
+          />
+        </v-dialog>
+
       </v-card>
     </v-responsive>
   </v-container>
 
-  <AppFooter /><!-- Really should be in App.vue, but putting it here makes popups easier -->
+  <AppFooter />
 </template>
 
 <script>
@@ -417,6 +425,7 @@ export default {
     var observed_TX = 0;
     var currentPromoterSequence = '';
     var isLigateActive = false;
+    var isViewStudentLigationsActive = false
     var isNewInputActive = false;
     var isUserLoginActive = false;
 
@@ -439,6 +448,7 @@ export default {
       observed_TX: observed_TX,
       currentPromoterSequence: currentPromoterSequence,
       isLigateActive: isLigateActive,
+      isViewStudentLigationsActive: isViewStudentLigationsActive,
       isNewInputActive: isNewInputActive,
       isUserLoginActive: isUserLoginActive,
     
@@ -590,6 +600,10 @@ export default {
 
     ligate () {
       this.isLigateActive = true;
+    },
+
+    viewStudentLigations () {
+      this.isViewStudentLigationsActive = true;
     },
 
     newInputActive () {
