@@ -10,7 +10,7 @@
         <!-- Centered content -->
         <v-col class="d-flex justify-center" cols="auto">
           <v-btn text>Tools</v-btn>
-          <v-btn text>Classroom</v-btn>
+          <v-btn @click="$emit('student-ligations')">Student Ligations</v-btn>
           <v-btn @click="$emit('new-input')">New Input</v-btn>
         </v-col>
 

@@ -1,7 +1,8 @@
 <template>
   <AppHeader
+  @student-ligations="viewStudentLigations"
   @new-input="newInputActive"
-  @user-login="userLoginActive"/> <!-- Really should be in App.vue, but putting it here makes popups easier -->
+  @user-login="userLoginActive"/>
 
   <!-- Center Interface -->
   <v-container class="fill-height d-flex justify-center align-center">
