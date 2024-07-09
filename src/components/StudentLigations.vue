@@ -50,6 +50,10 @@ export default {
         const blob = new Blob([response.data], { type: 'text/csv' });
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
+        console.log(response);
+        console.log(blob);
+        console.log(link);
+        console.log(link.href);
         link.download = 'student_ligations.csv';
         link.click();
       } catch (error) {
