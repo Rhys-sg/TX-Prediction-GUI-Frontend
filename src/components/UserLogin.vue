@@ -1,7 +1,7 @@
 <template>
   <v-form 
     ref="userLoginForm"
-    @submit.prevent="userLoginSubmit()"
+    @submit.prevent="userLoginSubmit"
   >
     <v-card :title="this.activeTab" style="width: 500px; max-height: 600px; top: 50%; left: 50%; transform: translate(-50%, 0%);">
       <v-card-text style="padding-top: 0px;">
@@ -108,7 +108,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 
 export default {
   props: {
@@ -135,6 +135,7 @@ export default {
       signupEmailRules: [
         v => !!v || 'Email is required',
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+        v => this.validateDomain(v) || 'E-mail must end with a valid domain',
       ],
       passwordRules: [
         v => !!v || 'Password is required',
@@ -150,6 +151,7 @@ export default {
       ],
       loginErrorMessage: '',
       signUpErrorMessage: '',
+      validDomains: [],
     };
   },
   computed: {
@@ -157,8 +159,11 @@ export default {
       return this.isLogin ? 'Login' : 'Sign Up';
     }
   },
+  created() {
+    this.getValidDomain();
+  },
   methods: {
-    changePage (){
+    changePage() {
       this.isLogin = !this.isLogin;
     },
 
@@ -176,14 +181,14 @@ export default {
           fullName: this.fullName,
           email: this.email.toLowerCase(),
           password: this.password,
-        })
+        });
         if (response.data.successful) {
-          this.$emit('close')
+          this.$emit('close');
         } else {
           this.signUpErrorMessage = 'This email already exists';
         }
       } catch (error) {
-        console.error('An error occurred.', error)
+        console.error('An error occurred.', error);
       }
     },
 
@@ -194,7 +199,7 @@ export default {
           password: this.password,
         });
         if (response.data.successful) {
-          this.$emit('close')
+          this.$emit('close');
         } else {
           this.loginErrorMessage = 'Incorrect email or password';
         }
@@ -202,6 +207,23 @@ export default {
         console.error('An error occurred.', error);
       }
     },
-  }
+
+    async getValidDomain() {
+      try {
+        const response = await axios.post(`${this.backendUrl}/get_valid_domain`);
+        this.validDomains = response.data.emails;
+      } catch (error) {
+        console.error('An error occurred.', error);
+      }
+    },
+
+    validateDomain(email) {
+      if (!this.validDomains.length) {
+        return false;
+      }
+      let domain = email.split('@')[1];
+      return this.validDomains.some(validDomain => domain.endsWith(validDomain));
+    },
+  },
 };
 </script>
