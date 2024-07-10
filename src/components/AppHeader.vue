@@ -16,7 +16,21 @@
 
         <!-- Right-aligned content -->
         <v-col class="d-flex justify-end" cols="auto" style="margin-right: -128px;">
-          <v-btn @click="$emit('user-login')" icon="mdi-account" size="small"></v-btn>
+          <v-btn
+            v-if="isUserLogedin === false"
+            @click="$emit('user-login')"
+            icon="mdi-account"
+            size="small"
+          ></v-btn>
+          <v-btn
+            v-else
+            @click="$emit('user-account')"
+            icon=""
+            variant="outlined"
+            size="small"
+          >
+            <span><h2>{{ firstName[0] + lastName[0] }}</h2></span>
+          </v-btn>
           <v-btn icon="mdi-cog" size="small" style="margin-left: 8px;"></v-btn>
           <v-btn icon="mdi-download" size="small" style="margin-left: 8px;"  @click="takeScreenshot"></v-btn>
         </v-col>
@@ -29,7 +43,20 @@
 import html2canvas from 'html2canvas';
 
 export default {
-  name: 'AppHeader',
+  props: {
+    isUserLogedin: {
+      type: Boolean,
+      required: true
+    },
+    firstName: {
+      type: String,
+      required: true
+    },
+    lastName: {
+      type: String,
+      required: true
+    },
+  },
   methods: {
     async takeScreenshot() {
       const canvas = await html2canvas(document.body);
@@ -58,5 +85,4 @@ export default {
 .align-center > .d-flex {
   flex: 1;
 }
-
 </style>

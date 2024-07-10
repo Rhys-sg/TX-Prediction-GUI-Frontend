@@ -1,8 +1,13 @@
 <template>
   <AppHeader
+  :isUserLogedin="isUserLogedin"
+  :firstName="firstName"
+  :lastName="lastName"
+  :email="email"
   @student-ligations="viewStudentLigations"
   @new-input="newInputActive"
-  @user-login="userLoginActive"/>
+  @user-login="userLoginActive"
+  @user-account="userAccountActive"/>
 
   <!-- Center Interface -->
   <v-container class="fill-height d-flex justify-center align-center">
@@ -182,190 +187,15 @@
 
         <!-- Ligate popup -->
         <v-dialog v-model="isLigateActive">
-          <template v-slot:default="{ isActive }">
-            <v-form 
-              ref="ligateForm"
-              @submit.prevent="ligateSubmit()"
-            >
-              <v-card title="Ligate" style="width: 800px; max-height: 550px; top: 50%; left: 50%; transform: translate(-50%, 0%);">
-                <v-card-text style="padding-top: 12px;">
-                  <v-row>
-                    <v-col cols="12" md="12" style="padding-bottom: 0px;">
-                      <v-text-field
-                        v-model="groupName"
-                        label="Group Name"
-                        :rules="groupNameRules"
-                        rows="1"
-                        variant="filled"
-                        required
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-
-                  <v-row>
-                    <v-col cols="12" md="12" style="padding-bottom: 0px;">
-                      <v-text-field
-                        v-model="ligateStudents"
-                        label="Students"
-                        :rules="studentsRules"
-                        rows="1"
-                        variant="filled"
-                        required
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                  
-                  <v-row>
-                    <v-col cols="12" md="12" style="padding-bottom: 0px;">
-                      <v-text-field
-                        v-model="currentPromoterSequence"
-                        label="Coding Strand"
-                        :rules="codingStrandRules"
-                        rows="1"
-                        variant="filled"
-                        maxlength="36"
-                        counter
-                        required
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                </v-card-text>
-
-                <v-card-actions style="padding-top: 0px; padding-bottom: 12px; padding-right: 22px;">
-                  <v-btn text="Close" @click="isActive.value = false"></v-btn>
-                  <v-btn text="Submit" type="submit"></v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-form>
-          </template>
-        </v-dialog>
-
-        <!-- New input popup -->
-        <v-dialog v-model="isNewInputActive">
-          <template v-slot:default="{ isActive }">
-            <v-form 
-              ref="newInputForm"
-              @submit.prevent="newInputSubmit()"
-            >
-            <v-card title="New Input" style="width: 800px; max-height: 625px; top: 50%; left: 50%; transform: translate(-50%, 0%);">
-                <v-card-text style="padding-bottom: 0px;">
-                                        
-                  <!-- First Section: student(s) -->
-                  <h4 style="padding-bottom: 16px;">Students</h4>
-
-                  <!-- Dynamically add row for each student entry -->
-                  <v-row v-for="(inputSet, index) in inputSets" :key="index">
-
-                    <!-- Remove student -->
-                    <v-col cols="12" md="1" class="d-flex align-center">
-                      <v-btn
-                        icon="mdi-minus"
-                        size="small"
-                        style="transform: translate(0%, -12.5%);"
-                        @click="removeInputSet(index)"
-                      ></v-btn>
-                    </v-col>
-
-                    <!-- First name -->
-                    <v-col cols="12" md="3" style="padding-bottom: 0px;">
-                      <v-text-field
-                        v-model="inputSet.firstname"
-                        :rules="nameRules"
-                        label="First name"
-                        required
-                      ></v-text-field>
-                    </v-col>
-
-                    <!-- Last name -->
-                    <v-col cols="12" md="4" style="padding-bottom: 0px;">
-                      <v-text-field
-                        v-model="inputSet.lastname"
-                        :rules="nameRules"
-                        label="Last name"
-                        required
-                      ></v-text-field>
-                    </v-col>
-
-                    <!-- Email -->
-                    <v-col cols="12" md="4" style="padding-bottom: 0px;">
-                      <v-text-field
-                        v-model="inputSet.email"
-                        label="Email address"
-                        :rules="emailRules"
-                        placeholder="tienm@whitman.edu"
-                        type="email"
-                        required
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-
-                  <!-- Add new student -->
-                  <v-row>
-                    <v-col cols="12" md="1" class="d-flex align-center">
-                      <v-btn
-                        icon="mdi-plus"
-                        size="small"
-                        style="transform: translate(0%, -12.5%);"
-                        @click="addInputSet()"
-                      ></v-btn>
-                    </v-col>
-                  </v-row>
-
-                  <v-row>
-                    <v-container>
-                      <v-divider></v-divider>
-                    </v-container>
-                  </v-row>
-
-                  <!-- Second section: promoter sequence and TX rate -->
-                  <v-row style="padding-bottom: 12px;">
-                    <v-col cols="12" md="8">
-                      <v-text-field
-                        v-model="inputPromoterSequence"
-                        label="Coding Strand"
-                        :rules="codingStrandRules"
-                        rows="1"
-                        variant="filled"
-                        maxlength="36"
-                        counter
-                        required
-                      ></v-text-field>
-                    </v-col>
-                  
-                    <v-col cols="12" md="4">
-                      <v-text-field
-                        v-model="inputObservedTX"
-                        :rules="observedTXRateRules"
-                        label="Observed TX Rate"
-                        required
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                  
-                  <!-- Third section: extra notes for input -->
-                  <v-textarea
-                    v-model="inputNotes"
-                    label="Notes"
-                    rows="2"
-                    variant="filled"
-                    auto-grow
-                  ></v-textarea>
-                </v-card-text>
-
-                <v-card-actions style="padding-top: 0px; padding-bottom: 12px; padding-right: 22px;">
-                  <v-btn text="Close" @click="isActive.value = false"></v-btn>
-                  <v-btn text="Submit" type="submit"></v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-form>
-          </template>
-        </v-dialog>
-
-        <!-- User Login -->
-        <v-dialog v-model="isUserLoginActive">
-          <UserLogin
+          <LigateEntry
             :backendUrl="backendUrl"
-            @close="isUserLoginActive = false"
+            v-model:schools="schools"
+            v-model:semesterSection="semesterSection"
+            v-model:groupName="groupName"
+            v-model:ligateStudents="ligateStudents"
+            v-model:currentPromoterSequence="currentPromoterSequence"
+            @ligateSubmit="ligateSubmit"
+            @close="isLigateActive = false"
           />
         </v-dialog>
 
@@ -374,6 +204,39 @@
           <StudentLigations
             :backendUrl="backendUrl"
             @close="isViewStudentLigationsActive = false"
+          />
+        </v-dialog>
+
+        <!-- New input popup -->
+        <v-dialog v-model="isNewInputActive">
+          <NewInput
+            :backendUrl="backendUrl"
+            v-model:inputSets="inputSets"
+            v-model:currentPromoterSequence="currentPromoterSequence"
+            v-model:inputObservedTX="inputObservedTX"
+            v-model:inputNotes="inputNotes"
+            @newInputSubmit="newInputSubmit"
+            @close="isNewInputActive = false"
+          />
+        </v-dialog>
+
+        <!-- User Login -->
+        <v-dialog v-model="isUserLoginActive" persistent>
+          <UserLogin
+            :backendUrl="backendUrl"
+            v-model:isUserLogedin="isUserLogedin"
+            v-model:firstName="firstName"
+            v-model:lastName="lastName"
+            v-model:email="email"
+            v-model:inputSets="inputSets"
+          />
+        </v-dialog>
+
+        <!-- User Account -->
+        <v-dialog v-model="isUserAccountActive">
+          <UserAccount
+            @log-out="isUserLogedin = false, isUserAccountActive = false"
+            @close="isUserAccountActive = false"
           />
         </v-dialog>
 
@@ -387,7 +250,11 @@
 <script>
 import BarChart from './BarChart'
 import TextInput from './TextInput'
+import LigateEntry from './LigateEntry'
+import StudentLigations from './StudentLigations'
+import NewInput from './NewInput'
 import UserLogin from './UserLogin'
+import UserAccount from './UserAccount'
 import axios from 'axios'
 
 export default {
@@ -396,100 +263,83 @@ export default {
     sectionName: String
   },
   data() {
-    const backendUrl = 'https://tx-prediction-gui-backend.onrender.com';
-    var upstreamUpperOverhang = 'CGAC';
-    var inSituUpperPromoterSequence = 'TCCGGGCGCTATCATGCCATACCGCGAAAGGTTTTGCACCATTCGT';
-    var inSituLowerPromoterSequence = 'AGGCCCGCGATAGTACGGTATGGCGCTTTCCAAAACGTGGTAAGCA';
-    var downstreamLowerOverhang = 'CGCC';
-  
-    var pCloneUpperPromoterSequence = '';
-    var pCloneLowerPromoterSequence = '';
-    var upperSequences = [
+    return {
+      backendUrl: 'https://tx-prediction-gui-backend.onrender.com',
+
+      // Promoter visual
+      lines: Array.from({ length: 51 }),
+      upstreamUpperOverhang: 'CGAC',
+      inSituUpperPromoterSequence: 'TCCGGGCGCTATCATGCCATACCGCGAAAGGTTTTGCACCATTCGT',
+      inSituLowerPromoterSequence: 'AGGCCCGCGATAGTACGGTATGGCGCTTTCCAAAACGTGGTAAGCA',
+      downstreamLowerOverhang: 'CGCC',
+      pCloneUpperPromoterSequence: '',
+      pCloneLowerPromoterSequence: '',
+      upperSequences: [],
+      lowerSequences: [],
+
+      // User interaction
+      isCut: false,
+      promoterDirectionDegree: 0,
+
+      // Text input
+      defaultUpdater: false,
+      blankUpdater: true,
+      currentPromoterSequence: '',
+
+      // Prediction (and observed)
+      predicted_TX: 0,
+      observed_TX: 0,
+      observedTXEntries: null,
+      averageObservedTX: 0,
+
+      // Ligate popup
+      isLigateActive: false,
+      schools: ['Whitman'],
+      semesterSection: ['SP24'],
+
+      // View student ligation orders
+      isViewStudentLigationsActive: false,
+
+      // New input
+      isNewInputActive: false,
+      inputSets: [{ firstname: '', lastname: '', email: '' }],
+      groupName: '', 
+      ligateStudents: '',
+      inputObservedTX: '',
+      inputNotes: '',
+
+      // User login
+      isUserLoginActive: true,
+      isUserLogedin: false,
+      firstName: '',
+      lastName: '',
+      email: '',
+
+      // User account
+      isUserAccountActive: false,
+      
+    };
+  },
+  created() {
+    this.upperSequences = [
       { text: 'TTC', left: '0px', color: '#FFA500' },
-      { text: upstreamUpperOverhang, left: '22px', color: '#747475' },
-      { text: inSituUpperPromoterSequence, left: '50%', transform: 'translate(-50%, -50%)', color: '#747475' },
+      { text: this.upstreamUpperOverhang, left: '22px', color: '#747475' },
+      { text: this.inSituUpperPromoterSequence, left: '50%', transform: 'translate(-50%, -50%)', color: '#747475' },
       { text: 'GCGG', right: '22px', color: '#FFA500' },
       { text: 'GAA', right: '0px', color: '#FFA500' },
     ];
-    var lowerSequences = [
+    this.lowerSequences = [
       { text: 'AAG', left: '0px', color: '#FFA500' },
       { text: 'GCTG', left: '22px', color: '#FFA500' },
-      { text: inSituLowerPromoterSequence, left: '50%', transform: 'translate(-50%, -50%)', color: '#747475' },
-      { text: downstreamLowerOverhang, right: '22px', color: '#747475' },
+      { text: this.inSituLowerPromoterSequence, left: '50%', transform: 'translate(-50%, -50%)', color: '#747475' },
+      { text: this.downstreamLowerOverhang, right: '22px', color: '#747475' },
       { text: 'CTT', right: '0px', color: '#FFA500' },
     ];
-    var isCut = false;
-    var promoterDirectionDegree = 0;
-    var defaultUpdater = false;
-    var blankUpdater = true;
-    var predicted_TX = 0;
-    var observed_TX = 0;
-    var currentPromoterSequence = '';
-    var isLigateActive = false;
-    var isViewStudentLigationsActive = false
-    var isNewInputActive = false;
-    var isUserLoginActive = false;
-
-    return {
-      backendUrl: backendUrl,
-      lines: Array.from({ length: 51 }),
-      upstreamUpperOverhang: upstreamUpperOverhang,
-      inSituUpperPromoterSequence: inSituUpperPromoterSequence,
-      inSituLowerPromoterSequence: inSituLowerPromoterSequence,
-      downstreamLowerOverhang: downstreamLowerOverhang,
-      pCloneUpperPromoterSequence: pCloneUpperPromoterSequence,
-      pCloneLowerPromoterSequence: pCloneLowerPromoterSequence,
-      upperSequences: upperSequences,
-      lowerSequences: lowerSequences,
-      isCut: isCut,
-      promoterDirectionDegree: promoterDirectionDegree,
-      defaultUpdater: defaultUpdater,
-      blankUpdater: blankUpdater,
-      predicted_TX: predicted_TX,
-      observed_TX: observed_TX,
-      currentPromoterSequence: currentPromoterSequence,
-      isLigateActive: isLigateActive,
-      isViewStudentLigationsActive: isViewStudentLigationsActive,
-      isNewInputActive: isNewInputActive,
-      isUserLoginActive: isUserLoginActive,
-    
-      // Input variables
-      isLigateValid: false,
-      isNewInputValid: false,
-      inputSets: [
-        {
-          firstname: '',
-          lastname: '',
-          email: '',
-        },
-      ],
-      groupName: null, 
-      ligateStudents: null,
-      inputPromoterSequence: null,
-      inputObservedTX: null,
-      inputNotes: null,
-      nameRules: [
-        v => !!v || 'Name is required',
-      ],
-      groupNameRules: [
-        v => !!v || 'Group name is required',
-      ],
-      studentsRules: [
-        v => !!v || 'Students are required',
-      ],
-      emailRules: [
-        v => !!v || 'Email is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-      ],
-      codingStrandRules: [
-        v => !!v || 'Coding strand is required',
-      ],
-      observedTXRateRules: [
-        v => !!v || 'Observed TX Rate is required',
-      ],
-      observedTXEntries: null,
-      averageObservedTX: 0,
-    };
+  },
+  watch: {
+    isUserLogedin(val) {
+      this.isUserLoginActive = !val;
+    }
   },
   methods: {
     cut() {
@@ -557,7 +407,6 @@ export default {
 
     handleLocalCloneUpperPromoterSequenceUpdate(newVal) {
       this.currentPromoterSequence = newVal;
-      this.inputPromoterSequence = this.currentPromoterSequence;
     },
 
     predict () {
@@ -602,7 +451,7 @@ export default {
     ligate () {
       this.isLigateActive = true;
     },
-
+    
     viewStudentLigations () {
       this.isViewStudentLigationsActive = true;
     },
@@ -611,71 +460,23 @@ export default {
       this.isNewInputActive = true;
     },
 
+    async newInputSubmit() {
+      this.isNewInputActive = false;
+    },
+
     userLoginActive () {
       this.isUserLoginActive = true;
     },
 
-    addInputSet() {
-      this.inputSets.push({
-        firstname: '',
-        lastname: '',
-        email: '',
-      });
-    },
-
-    removeInputSet(index) {
-      if (this.inputSets.length <= 1) {
-        return;
-      }
-      this.inputSets.splice(index, 1);
-    },
-
-    async newInputSubmit() {
-      const { valid } = await this.$refs.newInputForm.validate()
-      if (valid) {
-        this.isNewInputActive = false;
-        this.insertObservedTX();
-      }  
-    },
-
-    async insertObservedTX() {
-      try {
-        const response = await axios.post(`${this.backendUrl}/insert_observed_TX`, {
-          students: this.inputSets,
-          codingStrand: this.inputPromoterSequence,
-          TX: this.inputObservedTX,
-          Notes: this.inputNotes,
-        });
-        console.log(response.data.success);
-      } catch (error) {
-        console.error('An error occurred.', error)
-      }
+    userAccountActive () {
+      this.isUserAccountActive = true;
     },
 
     async ligateSubmit() {
-      const { valid } = await this.$refs.ligateForm.validate()
-      if (valid) {
-        this.insertSimulatedLigation();
-        this.updateBooleanValues_PostLigate()
-        this.showOld1035_PostLigate()
-        this.updateGraphicVariables_PostLigate()
-        this.updateGraphic_PostLigate()
-      }     
-    },
-
-    async insertSimulatedLigation() {
-      try {
-        const response = await axios.post(`${this.backendUrl}/insert_simulated_ligation`, {
-          groupName: this.groupName,
-          students: this.ligateStudents,
-          codingStrand: this.inputPromoterSequence,
-        })
-        console.log(response.data.entries);
-        console.log(response.data.success);
-        console.log(response.data.error);
-      } catch (error) {
-        console.error('An error occurred.', error)
-      }
+      this.updateBooleanValues_PostLigate()
+      this.showOld1035_PostLigate()
+      this.updateGraphicVariables_PostLigate()
+      this.updateGraphic_PostLigate() 
     },
 
     updateBooleanValues_PostLigate() {

@@ -47,24 +47,7 @@ export default {
         const response = await axios.post(`${this.backendUrl}/download_student_ligations`, {
           responseType: 'blob',
         });
-
-        console.log('Raw response:', response); // Log the entire response object
-
-        // Check response status
-        console.log('Response status:', response.status);
-
-        // Check response headers
-        console.log('Response headers:', response.headers);
-
-        // Check response data
-        console.log('Response data:', response.data);
-
-        // Ensure response.data is converted to string if necessary
-        const csvData = typeof response.data === 'object' ? JSON.stringify(response.data) : response.data;
-        
-        console.log('CSV data:', csvData); // Log the CSV data before creating Blob
-
-        const blob = new Blob([csvData], { type: 'text/csv' });
+        const blob = new Blob([response.data], { type: 'text/csv' });
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
         link.download = 'student_ligations.csv';
@@ -73,7 +56,6 @@ export default {
         console.error('Error downloading student ligations:', error);
       }
     },
-
 
     async querySimulatedLigation() {
       try {
