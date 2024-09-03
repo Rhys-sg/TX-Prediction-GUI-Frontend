@@ -244,6 +244,7 @@ export default {
           password: this.password,
         });
         console.log(response.data.success);
+        console.log(response.data.error);
         if (!response.data.success) {
           this.signUpErrorMessage = 'This email already exists';
         }
