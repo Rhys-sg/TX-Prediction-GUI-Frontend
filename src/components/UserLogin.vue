@@ -243,6 +243,7 @@ export default {
           email: this.email.toLowerCase(),
           password: this.password,
         });
+        console.log(response.data.success);
         if (!response.data.success) {
           this.signUpErrorMessage = 'This email already exists';
         }
