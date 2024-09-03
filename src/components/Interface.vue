@@ -211,6 +211,7 @@
         <v-dialog v-model="isNewInputActive">
           <NewInput
             :backendUrl="backendUrl"
+            v-model:email="email"
             v-model:inputSets="inputSets"
             v-model:currentPromoterSequence="currentPromoterSequence"
             v-model:inputObservedTX="inputObservedTX"
