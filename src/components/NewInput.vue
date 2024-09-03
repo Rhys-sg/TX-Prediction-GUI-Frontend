@@ -1,4 +1,13 @@
 <template>
+  <!-- NewInputForm Component -->
+  <!-- 
+    This component allows users to submit information about the transcription rate of after observed ligation.
+    The form contains multiple student records with associated details such as first name, last name, and email address. 
+    Users can dynamically add or remove input fields for students. 
+    Additional fields for a coding strand sequence, observed TX rate, and notes are also included.
+    The form includes validation for required fields, email format, and domain validity, and submits data to a backend API.
+    It also emits events for form submission and closing to track the popup.
+  -->
   <v-form 
     ref="newInputForm"
     @submit.prevent="newInputSubmit()"

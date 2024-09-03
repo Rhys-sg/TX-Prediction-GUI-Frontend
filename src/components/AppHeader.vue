@@ -1,4 +1,5 @@
 <template>
+  <!-- The application bar component used for NewInput popup, user, settings, and the placeholder buttons -->
   <v-app-bar app>
     <v-container>
       <v-row class="align-center">

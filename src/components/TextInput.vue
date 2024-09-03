@@ -1,4 +1,11 @@
 <template>
+  <!-- Text Entry Component -->
+  <!-- 
+      This component allows students to type the promoter sequence into a modified text entry component.
+      It automatically populates the compliment strand, includes uneditable "overhang" sequences,
+      contains and inserts the default sequence, and tracks differences between the students sequence and 
+      the default.
+  -->
   <v-container style="padding: 0px;">
 
     <!-- Base Text Entry Area -->

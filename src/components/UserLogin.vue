@@ -1,4 +1,16 @@
 <template>
+  <!-- UserLogin Component -->
+  <!--
+    This component provides a user login and sign-up form within a card. 
+    It uses Vuetify's form elements to collect user information such as first name, last name, email, 
+    and password. Depending on the `isLogin` state, the form switches between login and sign-up modes. 
+    The component handles form submission, validation, and communicates with the backend to process 
+    login and sign-up requests. It also includes functionality for domain validation and password visibility toggling.
+
+    Importantly:
+     - After a user logs in, they are automatically logged in.
+     - Users must use a valid email with a domain contained in the database.
+  -->
   <v-form 
     ref="userLoginForm"
     @submit.prevent="userLoginSubmit"

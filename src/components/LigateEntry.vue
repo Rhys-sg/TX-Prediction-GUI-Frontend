@@ -1,4 +1,11 @@
 <template>
+  <!-- LigateForm Component -->
+  <!-- 
+    This component provides a form for creating a new ligation entry. 
+    Users can select a school, semester/section, and input group name, students, and coding strand sequence.
+    The form includes validation for required fields and submits data to a backend API. 
+    It also emits events for form submission and closing to track the popup.
+  -->
   <v-form 
     ref="ligateForm"
     @submit.prevent="ligateSubmit()"
