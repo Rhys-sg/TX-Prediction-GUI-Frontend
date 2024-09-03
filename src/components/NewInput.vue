@@ -201,13 +201,13 @@ export default {
     async insertObservedTX() {
       try {
         console.log(this.internalCurrentPromoterSequence);
-        console.log(this.email);
+        console.log(email);
         console.log(this.internalInputSets.map(entry => `${entry.email}: ${entry.firstname} ${entry.lastname}`).join(', '));
         console.log(this.internalInputObservedTX);
         console.log(this.internalInputNotes);
         const response = await axios.post(`${this.backendUrl}/insert_observed_TX`, {
           codingStrand: this.internalCurrentPromoterSequence,
-          account_email: this.email,
+          account_email: email,
           students: this.internalInputSets.map(entry => `${entry.email}: ${entry.firstname} ${entry.lastname}`).join(', '),
           observed_TX: this.internalInputObservedTX,
           notes: this.internalInputNotes,
