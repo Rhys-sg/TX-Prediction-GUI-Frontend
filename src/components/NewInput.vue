@@ -200,6 +200,7 @@ export default {
     },
     async insertObservedTX() {
       try {
+        console.log("test");
         const response = await axios.post(`${this.backendUrl}/insert_observed_TX`, {
           codingStrand: this.internalCurrentPromoterSequence,
           account_email: this.email,
@@ -208,6 +209,7 @@ export default {
           notes: this.internalInputNotes,
         })
         console.log(response.data.success);
+        console.log(response.data.error);
       } catch (error) {
         console.error('An error occurred.', error)
       }
