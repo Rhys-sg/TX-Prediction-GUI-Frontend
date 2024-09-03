@@ -243,10 +243,10 @@ export default {
           email: this.email.toLowerCase(),
           password: this.password,
         });
-        if (!response.data.successful) {
+        if (!response.data.success) {
           this.signUpErrorMessage = 'This email already exists';
         }
-        return response.data.successful;
+        return response.data.success;
       } catch (error) {
         console.error('An error occurred.', error);
       }
