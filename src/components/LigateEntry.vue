@@ -11,6 +11,7 @@
             <v-combobox
               :items="schools"
               label="School"
+              v-model="selectedSchool"
             ></v-combobox>
           </v-col>
           
@@ -18,6 +19,7 @@
             <v-combobox
               :items="semesterSection"
               label="Semester/Section"
+              v-model="selectedSemesterSection"
             ></v-combobox>
           </v-col>
 
@@ -102,6 +104,8 @@ export default {
   },
   data() {
     return {
+      selectedSchool: null, // Data property for selected school
+      selectedSemesterSection: null, // New data property for selected semester/section
       internalGroupName: this.groupName,
       internalLigateStudents: this.ligateStudents,
       internalCurrentPromoterSequence: this.currentPromoterSequence,
@@ -139,15 +143,17 @@ export default {
     async insertSimulatedLigation() {
       try {
         const response = await axios.post(`${this.backendUrl}/insert_simulated_ligation`, {
+          school: this.selectedSchool,
+          // semesterSection: this.selectedSemesterSection,
           groupName: this.internalGroupName,
           students: this.internalLigateStudents,
-          codingStrand: this.currentPromoterSequence,
-        })
+          codingStrand: this.internalCurrentPromoterSequence,
+        });
         console.log(response.data.entries);
         console.log(response.data.success);
         console.log(response.data.error);
       } catch (error) {
-        console.error('An error occurred.', error)
+        console.error('An error occurred.', error);
       }
     },
   }
