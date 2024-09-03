@@ -4,7 +4,7 @@
     @submit.prevent="userLoginSubmit"
   >
     <v-card :title="this.activeTab" style="width: 500px; max-height: 600px; top: 50%; left: 50%; transform: translate(-50%, 0%);">
-      <v-card-text style="padding-top: 0px;">
+      <v-card-text style="padding-top: 0px; padding-bottom: 4px;">
         
         <v-row>
           <v-col
@@ -109,8 +109,8 @@
         </v-row>
       </v-card-text>
 
-      <v-card-actions style="display: flex; justify-content: center; padding-top: 0px; padding-bottom: 12px; padding-right: 22px;">
-        <v-btn :text="this.activeTab" variant="text" type="submit"></v-btn>
+      <v-card-actions style="display: flex; justify-content: center; padding: 12px 128px 34px;">
+        <v-btn :text="this.activeTab" variant="tonal" type="submit" block></v-btn>
       </v-card-actions>
     </v-card>
   </v-form>
@@ -170,7 +170,7 @@ export default {
       signupEmailRules: [
         v => !!v || 'Email is required',
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-        v => this.validateDomain(v) || 'E-mail must end with a valid domain',
+        v => this.validateDomain(v) || 'E-mail must have a valid domain',
       ],
       passwordRules: [
         v => !!v || 'Password is required',
@@ -221,8 +221,8 @@ export default {
       if (!valid) {
         return;
       }      
-      let submitSuccessful = this.isLogin ? await this.handleLogin() : await this.handleSignUp();
-      if (submitSuccessful) {
+      let submitsuccess = this.isLogin ? await this.handleLogin() : await this.handleSignUp();
+      if (submitsuccess) {
         this.$emit('update:inputSets', 
           [{
             firstname: this.internalFirstName,
@@ -238,13 +238,12 @@ export default {
     async handleSignUp() {
       try {
         const response = await axios.post(`${this.backendUrl}/handle_signup`, {
+          email: this.email.toLowerCase(),
+          domain: this.email.split('@')[1],
           firstName: this.firstName,
           lastName: this.lastName,
-          email: this.email.toLowerCase(),
           password: this.password,
         });
-        console.log(response.data.success);
-        console.log(response.data.error);
         if (!response.data.success) {
           this.signUpErrorMessage = 'This email already exists';
         }
@@ -278,8 +277,6 @@ export default {
     async getValidDomain() {
       try {
         const response = await axios.post(`${this.backendUrl}/get_valid_domain`);
-        console.log("Domains:");
-        console.log(response.data.domains);
         this.validDomains = response.data.domains;
       } catch (error) {
         console.error('An error occurred.', error);
