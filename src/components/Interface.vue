@@ -433,6 +433,7 @@ export default {
           codingStrand: this.currentPromoterSequence
         });
         this.observedTXEntries = response.data.entries;
+        console.log(this.observedTXEntries);
         this.averageObservedTX = this.getAverageFromEntryData(this.observedTXEntries)
         this.observed_TX = this.averageObservedTX;
         console.log(this.observed_TX);
