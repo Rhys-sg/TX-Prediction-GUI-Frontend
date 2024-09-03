@@ -200,6 +200,7 @@ export default {
       }
     },
     async insertObservedTX() {
+      console.log("test")
       try {
         const response = await axios.post(`${this.backendUrl}/insert_observed_TX`, {
           students: this.inputSets,
