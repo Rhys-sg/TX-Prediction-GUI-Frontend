@@ -218,7 +218,7 @@ export default {
     async getValidDomain() {
       try {
         const response = await axios.post(`${this.backendUrl}/get_valid_domain`);
-        this.validDomains = response.data.emails;
+        this.validDomains = response.data.domain;
       } catch (error) {
         console.error('An error occurred.', error);
       }
