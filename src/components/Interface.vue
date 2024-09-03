@@ -432,10 +432,7 @@ export default {
         const response = await axios.post(`${this.backendUrl}/query_Oberved_TX`, {
           codingStrand: this.currentPromoterSequence
         });
-        this.observedTXEntries = response.data.entries;
-        console.log(this.observedTXEntries);
-        this.averageObservedTX = this.getAverageFromEntryData(this.observedTXEntries)
-        this.observed_TX = this.averageObservedTX;
+        this.observed_TX = response.data.avererage_observed_TX;
         console.log(this.observed_TX);
       } catch (error) {
         console.error('An error occurred.', error);
