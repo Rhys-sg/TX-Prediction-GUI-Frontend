@@ -209,6 +209,7 @@ export default {
           Notes: this.inputNotes,
         })
         console.log(response.data.success);
+        console.log(response.data.error);
       } catch (error) {
         console.error('An error occurred.', error)
       }
