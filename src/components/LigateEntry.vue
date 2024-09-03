@@ -147,7 +147,7 @@ export default {
           term: this.selectedSemesterSection,
           orderName: this.internalGroupName,
           students: this.internalLigateStudents,
-          codingStrand: this.internalCurrentPromoterSequence,
+          sequence: this.internalCurrentPromoterSequence,
         });
         console.log(response.data.entries);
         console.log(response.data.success);
