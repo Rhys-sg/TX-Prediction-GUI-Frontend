@@ -144,8 +144,8 @@ export default {
       try {
         const response = await axios.post(`${this.backendUrl}/insert_simulated_ligation`, {
           school: this.selectedSchool,
-          // semesterSection: this.selectedSemesterSection,
-          groupName: this.internalGroupName,
+          term: this.selectedSemesterSection,
+          orderName: this.internalGroupName,
           students: this.internalLigateStudents,
           codingStrand: this.internalCurrentPromoterSequence,
         });
