@@ -201,7 +201,7 @@ export default {
     },
     async insertObservedTX() {
       try {
-        const response = await axios.post('http://localhost:5000/insert_observed_TX', {
+        const response = await axios.post(`${this.backendUrl}/insert_observed_TX`, {
           students: this.inputSets,
           codingStrand: this.currentPromoterSequence,
           TX: this.inputObservedTX,
