@@ -236,7 +236,8 @@
         <!-- User Account -->
         <v-dialog v-model="isUserAccountActive">
           <UserAccount
-            @log-out="isUserLogedin = false, isUserAccountActive = false"
+            @log-out="isUserLogedin = false,
+            isUserAccountActive = false"
             @close="isUserAccountActive = false"
           />
         </v-dialog>
