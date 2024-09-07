@@ -5,6 +5,8 @@
       This component queries and displays a table of student ligations and provides functionality to download the data as a CSV file. 
       The table is populated with data fetched from a backend API, and the CSV download feature is triggered by a button click.
       The form does not handle submissions/insertions but provides options to close the modal or download the data.
+
+      Student Ligations are queried by school and term, selected using a dropdown <v-combobox> object.
     -->
     <v-card-text>
       <v-row>
