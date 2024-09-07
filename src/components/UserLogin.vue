@@ -256,10 +256,13 @@ export default {
           lastName: this.lastName,
           password: this.password,
         });
-        if (!response.data.success) {
-          this.signUpErrorMessage = 'This email already exists';
-        }
-        return response.data.success;
+        // If handle_signup has errors present user with response error using this.signUpErrorMessage
+        // Return if there are errors
+        if (response.data.error) {
+          this.signUpErrorMessage = response.data.error;
+        } 
+        return !response.data.error;
+        
       } catch (error) {
         console.error('An error occurred.', error);
       }
