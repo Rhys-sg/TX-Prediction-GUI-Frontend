@@ -294,6 +294,7 @@ export default {
         const response = await axios.post(`${this.backendUrl}/get_valid_domain`);
         this.validDomains = response.data.domains;
         console.log(this.validDomains);
+        console.log(response.data.connection);
       } catch (error) {
         console.error('An error occurred.', error);
       }
