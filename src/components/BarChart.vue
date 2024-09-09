@@ -56,7 +56,6 @@ export default {
           y: {
             min: 0,
             max: 1,
-            reverse: true,
             ticks: {
               stepSize: 1,
               callback: function(value) {
