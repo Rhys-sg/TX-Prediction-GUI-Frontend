@@ -116,13 +116,8 @@ export default {
           school: this.selectedSchool,
           term: this.selectedTerm
         });
-        if (response.data.error){
-          console.log(response.data.error);
-        }
-        else {
-          this.studentLigations = response.data.studentLigations;
-          console.log(response.data.studentLigations);
-        }
+        this.studentLigations = response.data.studentLigations;
+        console.log(response.data.studentLigations);
       } catch (error) {
         console.error('An error occurred.', error);
       }
