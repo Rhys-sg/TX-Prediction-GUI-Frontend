@@ -413,7 +413,7 @@ export default {
 
     predict () {
       this.makePrediction();
-      this.queryObervedTX();
+      this.queryObservedTX();
     },
     
     async makePrediction() {
@@ -428,9 +428,9 @@ export default {
       }
     },
 
-    async queryObervedTX() {
+    async queryObservedTX() {
       try {
-        const response = await axios.post(`${this.backendUrl}/query_Oberved_TX`, {
+        const response = await axios.post(`${this.backendUrl}/query_Observed_TX`, {
           codingStrand: this.currentPromoterSequence
         });
         this.observed_TX = response.data.avererage_observed_TX;
