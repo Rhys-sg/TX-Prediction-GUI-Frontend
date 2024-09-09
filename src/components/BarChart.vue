@@ -1,5 +1,10 @@
 <template>
   <!-- BarChart Component -->
+  <!-- 
+    This component renders a bar chart using vue-chartjs and Chart.js. 
+    It displays two bars representing 'Predicted' and 'Observed' values with customizable colors. 
+    The chart options and data are dynamically updated based on the props provided.
+  -->
   <div class="chart-container">
     <Bar
       id="my-chart-id"
@@ -38,7 +43,6 @@ export default {
   },
   data() {
     return {
-      maxValue: 16000000000, // Manually set maximum value here
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
@@ -51,15 +55,11 @@ export default {
           y: {
             type: 'logarithmic',
             min: 1,
-            max: this.maxValue, // Use the manually set maximum value
+            // Format the tick labels as powers of 10
             ticks: {
               callback: function(value) {
-                // Check if the value is a power of 10
                 const exp = Math.log10(value);
-                if (exp % 1 === 0) {
-                  return `10^${exp}`;
-                }
-                return '';
+                return `10^${Math.round(exp)}`;
               }
             },
             grid: {
