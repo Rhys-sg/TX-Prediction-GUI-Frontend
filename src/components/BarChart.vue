@@ -55,11 +55,15 @@ export default {
           y: {
             type: 'logarithmic',
             min: 1,
+            // Format the tick labels as powers of 10
             ticks: {
               callback: function(value) {
-                // Format the tick labels as powers of 10
+                // Check if the value is a power of 10
                 const exp = Math.log10(value);
-                return `10^${Math.round(exp)}`;
+                if (exp % 1 === 0) {
+                  return `10^${exp}`;
+                }
+                return '';
               }
             },
             grid: {
