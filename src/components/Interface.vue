@@ -264,7 +264,7 @@ export default {
   },
   data() {
     return {
-      backendUrl: 'https://tx-prediction-gui-backend-73jj.onrender.com',
+      backendUrl: 'https://ecoli-promoter-prediction-backend.onrender.com',
 
       // Promoter visual
       lines: Array.from({ length: 51 }),
