@@ -58,8 +58,12 @@ export default {
             // Format the tick labels as powers of 10
             ticks: {
               callback: function(value) {
+                // Check if the value is a power of 10
                 const exp = Math.log10(value);
-                return `10^${Math.round(exp)}`;
+                if (exp % 1 === 0) { // If exp is an integer
+                  return `10^${exp}`;
+                }
+                return '';
               }
             },
             grid: {
