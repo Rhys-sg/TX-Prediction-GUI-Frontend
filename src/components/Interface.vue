@@ -464,9 +464,11 @@ export default {
       this.isUserLoginActive = true;
     },
 
-    userAccountActive () {
-      this.isUserAccountActive = true;
-    },
+    // Currently there is no window for user account
+    
+    // userAccountActive () {
+    //   this.isUserAccountActive = true;
+    // },
 
     async ligateSubmit() {
       this.updateBooleanValues_PostLigate()

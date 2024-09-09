@@ -55,6 +55,7 @@ export default {
           y: {
             type: 'logarithmic',
             min: 1,
+            max: 16000000000,
             // Format the tick labels as powers of 10
             ticks: {
               callback: function(value) {
