@@ -132,6 +132,11 @@ export default {
     },
     internalCurrentPromoterSequence(newVal) {
       this.$emit('update:currentPromoterSequence', newVal);
+    },
+    selectedSchool(newSchool) {
+      if (newSchool) {
+        this.queryTermsBySchool();
+      }
     }
   },
   created() {
