@@ -5,7 +5,7 @@
       <v-row class="align-center">
         <!-- Left-aligned content -->
         <v-col class="d-flex" cols="auto" style="margin-left: -128px;">
-          <v-toolbar-title>Ecoli Promoter Prediction</v-toolbar-title>
+          <v-toolbar-title>E. coli Promoter Prediction</v-toolbar-title>
         </v-col>
 
         <!-- Centered content -->
