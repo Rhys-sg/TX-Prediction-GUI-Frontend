@@ -189,8 +189,6 @@
         <v-dialog v-model="isLigateActive">
           <LigateEntry
             :backendUrl="backendUrl"
-            v-model:schools="schools"
-            v-model:semesterSection="semesterSection"
             v-model:groupName="groupName"
             v-model:ligateStudents="ligateStudents"
             v-model:currentPromoterSequence="currentPromoterSequence"
@@ -296,8 +294,6 @@ export default {
 
       // Ligate popup
       isLigateActive: false,
-      schools: ['Whitman'],
-      semesterSection: ['SP24'],
 
       // View student ligation orders
       isViewStudentLigationsActive: false,

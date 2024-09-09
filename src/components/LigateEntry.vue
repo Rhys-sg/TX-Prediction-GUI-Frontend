@@ -88,14 +88,6 @@ export default {
       type: String,
       required: true
     },
-    schools: {
-      type: Array,
-      required: true
-    },
-    semesterSection: {
-      type: Array,
-      required: true
-    },
     groupName: {
       type: String,
       required: true
