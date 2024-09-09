@@ -117,6 +117,7 @@ export default {
           term: this.selectedTerm
         });
         this.studentLigations = response.data.studentLigations;
+        console.log(response.data.studentLigations);
       } catch (error) {
         console.error('An error occurred.', error);
       }

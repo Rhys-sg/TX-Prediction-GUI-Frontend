@@ -136,7 +136,7 @@ export default {
     selectedSchool(newSchool) {
       if (newSchool) {
         this.queryTermsBySchool();
-        console.log("TEST")
+        console.log("TEST");
       }
     }
   },
