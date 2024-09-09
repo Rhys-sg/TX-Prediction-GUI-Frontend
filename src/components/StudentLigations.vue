@@ -116,18 +116,27 @@ export default {
           term: this.selectedTerm
         });
         this.studentLigations = response.data.studentLigations;
-        console.log(response.data.studentLigations);
       } catch (error) {
         console.error('An error occurred.', error);
       }
     },
 
     download() {
+      // Mapping of headers to object keys in the `studentLigations` array
       const headers = this.headers.map(header => header.title);
+      const keyMapping = {
+        'Order Name': 'orderName',  // Adjust these based on your actual data
+        'Sequence': 'sequence',
+        'Date': 'date',
+        'Students': 'students'
+      };
+
+      // Creating rows by mapping the headers to the correct keys in each ligation object
       const rows = this.studentLigations.map(ligation => 
-        this.headers.map(header => ligation[header.key]).join(',')
+        this.headers.map(header => ligation[keyMapping[header.title]] || '').join(',')
       ).join('\n');
 
+      // Generating the CSV content and triggering the download
       const csvContent = `data:text/csv;charset=utf-8,${headers.join(',')}\n${rows}`;
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement('a');
@@ -137,6 +146,7 @@ export default {
       link.click();
       document.body.removeChild(link);
     }
+
   }
 };
 </script>
