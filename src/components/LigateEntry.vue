@@ -182,9 +182,6 @@ export default {
           students: this.internalLigateStudents,
           sequence: this.internalCurrentPromoterSequence,
         });
-        console.log(response.data.entries);
-        console.log(response.data.success);
-        console.log(response.data.error);
       } catch (error) {
         console.error('An error occurred.', error);
       }
