@@ -18,7 +18,7 @@
             @change="queryTermsBySchool"
           ></v-combobox>
         </v-col>
-        
+
         <v-col cols="12" md="4">
           <v-combobox
             v-model="selectedTerm"
@@ -59,12 +59,6 @@ export default {
   },
   data() {
     return {
-      headers: [
-        { title: 'Order Name', align: 'start', key: '0' },
-        { title: 'Sequence', align: 'end', key: '1' },
-        { title: 'Date', align: 'end', key: '2' },
-        { title: 'Students', align: 'end', key: '3' },
-      ],
       studentLigations: [],
       selectedSchool: '',
       selectedTerm: '',
@@ -121,40 +115,30 @@ export default {
       }
     },
 
-    // Download method to download the CSV
     download() {
-      const csvContent = [];
+      if (this.studentLigations.length === 0) {
+        alert("No data to download");
+        return;
+      }
 
-      // Add headers
-      const headerRow = this.headers.map(header => header.title).join(',');
-      csvContent.push(headerRow);
-
-      // Add studentLigations data
-      this.studentLigations.forEach(ligation => {
-        const row = [
-          ligation.orderName,
-          ligation.sequence,
-          ligation.date,
-          ligation.students.join(' | ') // Assuming students is an array
-        ].join(',');
-        csvContent.push(row);
-      });
-
-      // Create CSV Blob
-      const csvBlob = new Blob([csvContent.join('\n')], { type: 'text/csv;charset=utf-8;' });
-
-      // Create link to download the file
+      const csvContent = this.convertToCSV(this.studentLigations);
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');
-      const url = URL.createObjectURL(csvBlob);
+      const url = URL.createObjectURL(blob);
+
       link.setAttribute('href', url);
       link.setAttribute('download', 'student_ligations.csv');
       link.style.visibility = 'hidden';
-
-      // Trigger the download
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-    }
+    },
+
+    convertToCSV(data) {
+      const headers = Object.keys(data[0]).join(',') + '\n';
+      const rows = data.map(obj => Object.values(obj).join(',')).join('\n');
+      return headers + rows;
+    },
   }
 };
 </script>
