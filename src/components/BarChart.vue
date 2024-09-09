@@ -38,6 +38,7 @@ export default {
   },
   data() {
     return {
+      maxValue: 16000000000, // Manually set maximum value here
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
@@ -50,7 +51,7 @@ export default {
           y: {
             type: 'logarithmic',
             min: 1,
-            // max will be set dynamically
+            max: this.maxValue, // Use the manually set maximum value
             ticks: {
               callback: function(value) {
                 // Check if the value is a power of 10
@@ -83,19 +84,6 @@ export default {
           backgroundColor: [this.predicted_TX_color, this.observed_TX_color],
           barThickness: 11,
         }]
-      }
-    },
-    chartOptionsComputed() {
-      const maxVal = Math.max(this.predicted_TX, this.observed_TX);
-      return {
-        ...this.chartOptions,
-        scales: {
-          ...this.chartOptions.scales,
-          y: {
-            ...this.chartOptions.scales.y,
-            max: maxVal
-          }
-        }
       }
     }
   }
