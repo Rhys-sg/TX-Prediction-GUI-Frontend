@@ -23,7 +23,7 @@
           <v-combobox
             v-model="selectedTerm"
             :items="terms"
-            label="Term/Section"
+            label="Semester/Section"
             :disabled="selectedSchool === ''"
           ></v-combobox>
         </v-col>

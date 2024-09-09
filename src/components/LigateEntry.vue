@@ -14,19 +14,21 @@
       <v-card-text style="padding-top: 12px;">
 
         <v-row>
-          <v-col cols="12" md="4" style="padding-bottom: 0px;">
+          <v-col cols="12" md="4">
             <v-combobox
+              v-model="selectedSchool"
               :items="schools"
               label="School"
-              v-model="selectedSchool"
+              @change="queryTermsBySchool"
             ></v-combobox>
           </v-col>
           
-          <v-col cols="12" md="4" style="padding-bottom: 0px;">
+          <v-col cols="12" md="4">
             <v-combobox
-              :items="semesterSection"
+              v-model="selectedTerm"
+              :items="terms"
               label="Semester/Section"
-              v-model="selectedSemesterSection"
+              :disabled="selectedSchool === ''"
             ></v-combobox>
           </v-col>
 
@@ -103,8 +105,10 @@ export default {
   },
   data() {
     return {
-      selectedSchool: null, // Data property for selected school
-      selectedSemesterSection: null, // New data property for selected semester/section
+      selectedSchool: '',
+      selectedTerm: '',
+      schools: [],
+      terms: [],
       internalGroupName: this.groupName,
       internalLigateStudents: this.ligateStudents,
       internalCurrentPromoterSequence: this.currentPromoterSequence,
@@ -130,7 +134,31 @@ export default {
       this.$emit('update:currentPromoterSequence', newVal);
     }
   },
+  created() {
+    this.querySchools();
+  },
   methods: {
+    async querySchools() {
+      try {
+        const response = await axios.post(`${this.backendUrl}/query_schools`);
+        this.schools = response.data.schools;
+      } catch (error) {
+        console.error('An error occurred.', error);
+      }
+    },
+
+    async queryTermsBySchool() {
+      try {
+        const response = await axios.post(`${this.backendUrl}/query_terms_by_school`, {
+          school: this.selectedSchool,
+        });
+        this.terms = response.data.terms || [];
+      } catch (error) {
+        console.error('An error occurred while querying terms.', error);
+        this.terms = [];
+      }
+    },
+
     async ligateSubmit() {
       const { valid } = await this.$refs.ligateForm.validate();
       if (valid) {
@@ -143,7 +171,7 @@ export default {
       try {
         const response = await axios.post(`${this.backendUrl}/insert_simulated_ligation`, {
           school: this.selectedSchool,
-          term: this.selectedSemesterSection,
+          term: this.selectedTerm,
           orderName: this.internalGroupName,
           students: this.internalLigateStudents,
           sequence: this.internalCurrentPromoterSequence,
