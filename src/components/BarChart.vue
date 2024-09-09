@@ -56,7 +56,7 @@ export default {
           y: {
             type: 'logarithmic',
             min: 1,
-            max: 15130826653.964834,
+            max: 16000000000,
             ticks: {
               callback: function(value) {
                 return value.toFixed(1);
