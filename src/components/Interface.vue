@@ -264,7 +264,7 @@ export default {
   },
   data() {
     return {
-      backendUrl: 'https://tx-prediction-gui-backend.onrender.com',
+      backendUrl: 'https://tx-prediction-gui-backend-73jj.onrender.com',
 
       // Promoter visual
       lines: Array.from({ length: 51 }),
@@ -465,7 +465,7 @@ export default {
     },
 
     // Currently there is no window for user account
-    
+
     // userAccountActive () {
     //   this.isUserAccountActive = true;
     // },
