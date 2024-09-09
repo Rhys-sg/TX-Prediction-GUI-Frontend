@@ -3,7 +3,6 @@
   <!-- 
     This component renders a bar chart using vue-chartjs and Chart.js. 
     It displays two bars representing 'Predicted' and 'Observed' values with customizable colors. 
-    The y-axis is configured to range from -5 to 0 with a reversed orientation. 
     The chart options and data are dynamically updated based on the props provided.
   -->
   <div class="chart-container">
