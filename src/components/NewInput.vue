@@ -92,7 +92,7 @@
             <v-text-field
               v-model="internalInputObservedTX"
               :rules="observedTXRateRules"
-              label="Observed TX Rate"
+              label="Observed Relative Fluorescence"
               required
             ></v-text-field>
           </v-col>

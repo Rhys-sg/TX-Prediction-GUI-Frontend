@@ -55,7 +55,7 @@ export default {
           },
           y: {
             min: 0,
-            max: 1,
+            max: 15130826653.964834,
             ticks: {
               stepSize: 1,
               callback: function(value) {
