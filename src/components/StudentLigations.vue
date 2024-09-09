@@ -121,33 +121,40 @@ export default {
       }
     },
 
+    // Download method to download the CSV
     download() {
-      // Mapping of headers to object keys in the `studentLigations` array
-      const headers = this.headers.map(header => header.title);
-      const keyMapping = {
-        'Order Name': 'orderName',  // Adjust these based on your actual data
-        'Sequence': 'sequence',
-        'Date': 'date',
-        'Students': 'students'
-      };
+      const csvContent = [];
 
-      // Creating rows by mapping the headers to the correct keys in each ligation object
-      const rows = this.studentLigations.map(ligation => 
-        this.headers.map(header => ligation[keyMapping[header.title]] || '').join(',')
-      ).join('\n');
+      // Add headers
+      const headerRow = this.headers.map(header => header.title).join(',');
+      csvContent.push(headerRow);
 
-      // Generating the CSV content and triggering the download
-      const csvContent = `data:text/csv;charset=utf-8,${headers.join(',')}\n${rows}`;
-      const encodedUri = encodeURI(csvContent);
+      // Add studentLigations data
+      this.studentLigations.forEach(ligation => {
+        const row = [
+          ligation.orderName,
+          ligation.sequence,
+          ligation.date,
+          ligation.students.join(' | ') // Assuming students is an array
+        ].join(',');
+        csvContent.push(row);
+      });
+
+      // Create CSV Blob
+      const csvBlob = new Blob([csvContent.join('\n')], { type: 'text/csv;charset=utf-8;' });
+
+      // Create link to download the file
       const link = document.createElement('a');
-      link.setAttribute('href', encodedUri);
+      const url = URL.createObjectURL(csvBlob);
+      link.setAttribute('href', url);
       link.setAttribute('download', 'student_ligations.csv');
+      link.style.visibility = 'hidden';
+
+      // Trigger the download
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
     }
-
   }
 };
 </script>
-
