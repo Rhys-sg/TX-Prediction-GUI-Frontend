@@ -3,7 +3,7 @@
     <!-- Student Ligations Component -->
     <!-- 
       This component queries and displays a table of student ligations and provides functionality to download the data as a CSV file. 
-      The table is populated with data fetched from a backend API, and the CSV download feature is triggered by a button click.
+      The table is populated with data queryed from a backend API, and the CSV download feature is triggered by a button click.
       The form does not handle submissions/insertions but provides options to close the modal or download the data.
 
       Student Ligations are queried by school and term, selected using a dropdown <v-combobox> object.
@@ -15,7 +15,7 @@
             v-model="selectedSchool"
             :items="schools"
             label="School"
-            @change="fetchTermsBySchool"
+            @change="queryTermsBySchool"
           ></v-combobox>
         </v-col>
         
@@ -81,15 +81,15 @@ export default {
     },
     selectedSchool(newSchool) {
       if (newSchool) {
-        this.fetchTermsBySchool();
+        this.queryTermsBySchool();
       }
     }
   },
   created() {
-    this.fetchSchools();
+    this.querySchools();
   },
   methods: {
-    async fetchSchools() {
+    async querySchools() {
       try {
         const response = await axios.post(`${this.backendUrl}/query_schools`);
         this.schools = response.data.schools;
@@ -98,14 +98,14 @@ export default {
       }
     },
 
-    async fetchTermsBySchool() {
+    async queryTermsBySchool() {
       try {
         const response = await axios.post(`${this.backendUrl}/query_terms_by_school`, {
           school: this.selectedSchool,
         });
         this.terms = response.data.terms || [];
       } catch (error) {
-        console.error('An error occurred while fetching terms.', error);
+        console.error('An error occurred while querying terms.', error);
         this.terms = [];
       }
     },
