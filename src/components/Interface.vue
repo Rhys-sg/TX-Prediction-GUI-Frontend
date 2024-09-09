@@ -433,7 +433,7 @@ export default {
         const response = await axios.post(`${this.backendUrl}/query_Observed_TX`, {
           codingStrand: this.currentPromoterSequence
         });
-        this.observed_TX = response.data.avererage_observed_TX;
+        this.observed_TX = response.data.average_observed_TX;
         console.log(this.observed_TX);
       } catch (error) {
         console.error('An error occurred.', error);
