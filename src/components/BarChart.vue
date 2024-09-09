@@ -54,8 +54,8 @@ export default {
             }
           },
           y: {
-            min: -5,
-            max: 0,
+            min: 0,
+            max: 1,
             reverse: true,
             ticks: {
               stepSize: 1,
