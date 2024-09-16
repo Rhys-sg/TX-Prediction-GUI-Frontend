@@ -1,4 +1,10 @@
 <template>
+  <!-- BarChart Component -->
+  <!-- 
+    This component renders a bar chart using vue-chartjs and Chart.js. 
+    It displays two bars representing 'Predicted' and 'Observed' values with customizable colors. 
+    The chart options and data are dynamically updated based on the props provided.
+  -->
   <div class="chart-container">
     <Bar
       id="my-chart-id"
@@ -76,32 +82,6 @@ export default {
             padding: {
               top: 10,
               bottom: 20
-            }
-          },
-          tooltip: {
-            enabled: false // Disable default tooltips
-          },
-          customTooltip: {
-            id: 'customTooltip',
-            beforeDraw(chart) {
-              const { ctx, data, options } = chart;
-              const { labels } = data;
-              const labelIndex = labels.indexOf('Observed');
-
-              if (labelIndex !== -1) {
-                const meta = chart.getDatasetMeta(0);
-                const bar = meta.data[labelIndex];
-                const { x, y } = bar.tooltipPosition();
-
-                // Customize tooltip appearance
-                ctx.save();
-                ctx.font = '12px Arial';
-                ctx.fillStyle = '#333';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText('This is the Observed value', x, y - 10);
-                ctx.restore();
-              }
             }
           }
         }
