@@ -1,10 +1,5 @@
 <template>
   <!-- BarChart Component -->
-  <!-- 
-    This component renders a bar chart using vue-chartjs and Chart.js. 
-    It displays two bars representing 'Predicted' and 'Observed' values with customizable colors. 
-    The chart options and data are dynamically updated based on the props provided.
-  -->
   <div class="chart-container">
     <Bar
       id="my-chart-id"
@@ -90,10 +85,13 @@ export default {
   },
   computed: {
     chartData() {
+      const predictedLabel = this.predicted_TX ? 'Predicted' : '<s>Predicted</s>';
+      const observedLabel = this.observed_TX ? 'Observed' : '<s>Observed</s>';
+      
       return {
-        labels: ['Predicted', 'Observed'],
+        labels: [predictedLabel, observedLabel],
         datasets: [{
-          data: [this.predicted_TX, this.observed_TX],
+          data: [this.predicted_TX || 0, this.observed_TX || 0], // Use 0 if no value is provided
           backgroundColor: [this.predicted_TX_color, this.observed_TX_color],
           barThickness: 11,
         }]
