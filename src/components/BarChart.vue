@@ -1,3 +1,14 @@
+<template>
+  <!-- BarChart Component -->
+  <div class="chart-container">
+    <Bar
+      id="my-chart-id"
+      :options="chartOptions"
+      :data="chartData"
+    />
+  </div>
+</template>
+
 <script>
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LogarithmicScale } from 'chart.js'
@@ -34,6 +45,9 @@ export default {
           x: {
             grid: {
               display: false
+            },
+            ticks: {
+              color: 'black', // Set x-axis label color to black
             }
           },
           y: {
@@ -46,7 +60,8 @@ export default {
                   return `10^${exp}`;
                 }
                 return '';
-              }
+              },
+              color: 'black', // Set y-axis label color to black
             },
             grid: {
               display: false
@@ -61,12 +76,13 @@ export default {
             display: true,
             text: 'Relative Fluorescence',
             font: {
-              size: 12 
+              size: 12
             },
             padding: {
               top: 10,
               bottom: 20
-            }
+            },
+            color: 'black' // Set title text color to black
           }
         }
       }
@@ -82,48 +98,10 @@ export default {
           barThickness: 11,
         }]
       }
-    },
-    labelColors() {
-      // If observed_TX is null or undefined, set the label color to red, otherwise use black
-      return {
-        predicted: '#000000',
-        observed: (this.observed_TX === null || this.observed_TX === undefined) ? '#FF0000' : '#000000'
-      };
     }
-  },
-  methods: {
-    updateChartLabelColors(chart) {
-      // Set the label colors based on the labelColors computed property
-      const xAxis = chart.scales['x'];
-      xAxis.ticks.forEach((tick, index) => {
-        if (index === 1) { // The 'Observed' label is at index 1
-          xAxis.ctx.fillStyle = this.labelColors.observed;
-        } else {
-          xAxis.ctx.fillStyle = this.labelColors.predicted;
-        }
-        xAxis.draw();
-      });
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      const chart = this.$refs.myChart.$data._chart;
-      this.updateChartLabelColors(chart);
-    });
   }
 }
 </script>
-
-<template>
-  <div class="chart-container">
-    <Bar
-      ref="myChart"
-      id="my-chart-id"
-      :options="chartOptions"
-      :data="chartData"
-    />
-  </div>
-</template>
 
 <style scoped>
 .chart-container {
