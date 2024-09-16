@@ -13,7 +13,6 @@
     />
   </div>
 </template>
-
 <script>
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LogarithmicScale } from 'chart.js'
@@ -94,7 +93,10 @@ export default {
         labels: ['Predicted', 'Observed'],
         datasets: [{
           data: [this.predicted_TX, this.observed_TX],
-          backgroundColor: [this.predicted_TX_color, this.observed_TX_color],
+          backgroundColor: [
+            this.predicted_TX_color,
+            this.observed_TX !== null ? 'red' : this.observed_TX_color
+          ],
           barThickness: 11,
         }]
       }
@@ -102,6 +104,7 @@ export default {
   }
 }
 </script>
+
 
 <style scoped>
 .chart-container {
