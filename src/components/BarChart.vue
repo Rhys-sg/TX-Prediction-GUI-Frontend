@@ -94,6 +94,7 @@ export default {
         console.log(newVal);
         this.observed_TX = this.predicted_TX;
         this.observed_TX_color = '#ff0000';
+        this.$forceUpdate();
       }
     },
   },
