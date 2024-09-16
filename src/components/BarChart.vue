@@ -55,12 +55,10 @@ export default {
           y: {
             type: 'logarithmic',
             min: 1,
-            // Format the tick labels as powers of 10
             ticks: {
               callback: function(value) {
-                // Check if the value is a power of 10
                 const exp = Math.log10(value);
-                if (exp % 1 === 0) { // If exp is an integer
+                if (exp % 1 === 0) {
                   return `10^${exp}`;
                 }
                 return '';
@@ -74,6 +72,17 @@ export default {
         plugins: {
           legend: {
             display: false
+          },
+          title: {
+            display: true,
+            text: 'Relative Fluorescence',
+            font: {
+              size: 16 
+            },
+            padding: {
+              top: 10,
+              bottom: 30
+            }
           }
         }
       }

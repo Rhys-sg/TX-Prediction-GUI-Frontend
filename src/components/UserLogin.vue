@@ -303,7 +303,6 @@ export default {
         return false;
       }
       let domain = email.split('@')[1];
-      console.log(domain);
       return this.validDomains.some(validDomain => domain.endsWith(validDomain));
     }
   },
