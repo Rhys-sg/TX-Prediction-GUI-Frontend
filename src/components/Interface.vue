@@ -538,7 +538,7 @@ export default {
 }
 .bp-text {
   position: absolute;
-  font: 12.19px "Monaco", monospace, sans-serif;
+  font: 12px "Monaco", monospace, sans-serif;
   letter-spacing: 0.5px;
   font-weight: 550;
   transform: translate(0%, -50%);
