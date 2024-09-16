@@ -66,20 +66,23 @@ export default {
             },
             grid: {
               display: false
-            },
-            title: {
-              display: true,
-              text: 'Relative Fluorescence', // Add y-axis label here
-              font: {
-                size: 14,
-                weight: 'bold'
-              }
             }
           }
         },
         plugins: {
           legend: {
             display: false
+          },
+          title: {
+            display: true,
+            text: 'Predicted vs Observed TX',
+            font: {
+              size: 12  // Adjusted font size to make the title smaller
+            },
+            padding: {
+              top: 10,
+              bottom: 20
+            }
           }
         }
       }
@@ -99,7 +102,6 @@ export default {
   }
 }
 </script>
-
 
 <style scoped>
 .chart-container {
