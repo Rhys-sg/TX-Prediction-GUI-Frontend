@@ -321,16 +321,16 @@ export default {
   created() {
     this.upperSequences = [
       { text: 'TTC', left: '0px', color: '#FFA500' },
-      { text: this.upstreamUpperOverhang, left: '25px', color: '#747475' },
+      { text: this.upstreamUpperOverhang, left: '27px', color: '#747475' },
       { text: this.inSituUpperPromoterSequence, left: '50%', transform: 'translate(-50%, -50%)', color: '#747475' },
-      { text: 'GCGG', right: '25px', color: '#FFA500' },
+      { text: 'GCGG', right: '27px', color: '#FFA500' },
       { text: 'GAA', right: '0px', color: '#FFA500' },
     ];
     this.lowerSequences = [
       { text: 'AAG', left: '0px', color: '#FFA500' },
-      { text: 'GCTG', left: '25px', color: '#FFA500' },
+      { text: 'GCTG', left: '27px', color: '#FFA500' },
       { text: this.inSituLowerPromoterSequence, left: '50%', transform: 'translate(-50%, -50%)', color: '#747475' },
-      { text: this.downstreamLowerOverhang, right: '25px', color: '#747475' },
+      { text: this.downstreamLowerOverhang, right: '27px', color: '#747475' },
       { text: 'CTT', right: '0px', color: '#FFA500' },
     ];
   },
