@@ -1,19 +1,3 @@
-<template>
-  <!-- BarChart Component -->
-  <!-- 
-    This component renders a bar chart using vue-chartjs and Chart.js. 
-    It displays two bars representing 'Predicted' and 'Observed' values with customizable colors. 
-    The chart options and data are dynamically updated based on the props provided.
-  -->
-  <div class="chart-container">
-    <Bar
-      id="my-chart-id"
-      :options="chartOptions"
-      :data="chartData"
-    />
-  </div>
-</template>
-
 <script>
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LogarithmicScale } from 'chart.js'
@@ -90,23 +74,56 @@ export default {
   },
   computed: {
     chartData() {
-      // If observed_TX is null or undefined, set its color to red
-      const observedColor = (this.observed_TX === null || this.observed_TX === undefined) 
-        ? '#FF0000' 
-        : this.observed_TX_color;
-      
       return {
         labels: ['Predicted', 'Observed'],
         datasets: [{
           data: [this.predicted_TX, this.observed_TX],
-          backgroundColor: [this.predicted_TX_color, observedColor],
+          backgroundColor: [this.predicted_TX_color, this.observed_TX_color],
           barThickness: 11,
         }]
       }
+    },
+    labelColors() {
+      // If observed_TX is null or undefined, set the label color to red, otherwise use black
+      return {
+        predicted: '#000000',
+        observed: (this.observed_TX === null || this.observed_TX === undefined) ? '#FF0000' : '#000000'
+      };
     }
+  },
+  methods: {
+    updateChartLabelColors(chart) {
+      // Set the label colors based on the labelColors computed property
+      const xAxis = chart.scales['x'];
+      xAxis.ticks.forEach((tick, index) => {
+        if (index === 1) { // The 'Observed' label is at index 1
+          xAxis.ctx.fillStyle = this.labelColors.observed;
+        } else {
+          xAxis.ctx.fillStyle = this.labelColors.predicted;
+        }
+        xAxis.draw();
+      });
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      const chart = this.$refs.myChart.$data._chart;
+      this.updateChartLabelColors(chart);
+    });
   }
 }
 </script>
+
+<template>
+  <div class="chart-container">
+    <Bar
+      ref="myChart"
+      id="my-chart-id"
+      :options="chartOptions"
+      :data="chartData"
+    />
+  </div>
+</template>
 
 <style scoped>
 .chart-container {
