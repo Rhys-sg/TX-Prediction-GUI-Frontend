@@ -45,9 +45,6 @@ export default {
           x: {
             grid: {
               display: false
-            },
-            ticks: {
-              color: 'black', // Set x-axis label color to black
             }
           },
           y: {
@@ -60,8 +57,7 @@ export default {
                   return `10^${exp}`;
                 }
                 return '';
-              },
-              color: 'black', // Set y-axis label color to black
+              }
             },
             grid: {
               display: false
@@ -70,19 +66,23 @@ export default {
         },
         plugins: {
           legend: {
-            display: false
+            display: true,
+            labels: {
+              color: (context) => {
+                return context.text === 'Observed' ? 'red' : undefined;
+              }
+            }
           },
           title: {
             display: true,
             text: 'Relative Fluorescence',
             font: {
-              size: 12
+              size: 12 
             },
             padding: {
               top: 10,
               bottom: 20
-            },
-            color: 'black' // Set title text color to black
+            }
           }
         }
       }
