@@ -88,16 +88,6 @@ export default {
       }
     }
   },
-  watch: {
-    observed_TX(newVal) {
-      if (newVal === null) {
-        console.log(newVal);
-        this.observed_TX = this.predicted_TX;
-        this.observed_TX_color = '#ff0000';
-        this.$forceUpdate();
-      }
-    },
-  },
   computed: {
     chartData() {
       return {
