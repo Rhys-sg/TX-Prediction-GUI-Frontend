@@ -71,13 +71,18 @@ export default {
         },
         plugins: {
           legend: {
-            display: false
+            display: true,
+            labels: {
+              font: {
+                size: 16
+              }
+            }
           },
           title: {
             display: true,
             text: 'Relative Fluorescence',
             font: {
-              size: 16 
+              size: 16
             },
             padding: {
               top: 10,
