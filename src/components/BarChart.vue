@@ -75,9 +75,9 @@ export default {
           },
           title: {
             display: true,
-            text: 'Predicted vs Observed TX',
+            text: 'Relative Fluorescence',
             font: {
-              size: 12  // Adjusted font size to make the title smaller
+              size: 12 
             },
             padding: {
               top: 10,
