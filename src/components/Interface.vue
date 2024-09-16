@@ -321,16 +321,16 @@ export default {
   created() {
     this.upperSequences = [
       { text: 'TTC', left: '0px', color: '#FFA500' },
-      { text: this.upstreamUpperOverhang, left: '22px', color: '#747475' },
+      { text: this.upstreamUpperOverhang, left: '23px', color: '#747475' },
       { text: this.inSituUpperPromoterSequence, left: '50%', transform: 'translate(-50%, -50%)', color: '#747475' },
-      { text: 'GCGG', right: '22px', color: '#FFA500' },
+      { text: 'GCGG', right: '23px', color: '#FFA500' },
       { text: 'GAA', right: '0px', color: '#FFA500' },
     ];
     this.lowerSequences = [
       { text: 'AAG', left: '0px', color: '#FFA500' },
-      { text: 'GCTG', left: '22px', color: '#FFA500' },
+      { text: 'GCTG', left: '23px', color: '#FFA500' },
       { text: this.inSituLowerPromoterSequence, left: '50%', transform: 'translate(-50%, -50%)', color: '#747475' },
-      { text: this.downstreamLowerOverhang, right: '22px', color: '#747475' },
+      { text: this.downstreamLowerOverhang, right: '23px', color: '#747475' },
       { text: 'CTT', right: '0px', color: '#FFA500' },
     ];
   },
@@ -538,7 +538,7 @@ export default {
 }
 .bp-text {
   position: absolute;
-  font: 11px "Monaco", monospace, sans-serif;
+  font: 11.5px "Monaco", monospace, sans-serif;
   letter-spacing: 0.5px;
   font-weight: 550;
   transform: translate(0%, -50%);
