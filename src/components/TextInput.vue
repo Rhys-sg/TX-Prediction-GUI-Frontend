@@ -18,17 +18,20 @@
       variant="outlined"
       counter
       no-resize
-      style="font-family: monospace;"
-      prefix="CGAC"
+      style="font-family: monospace; align-items: center; width: 100%;"
       @mouseover="isHovered = true"
       @mouseleave="isHovered = false"
       @focus="isFocused = true"
       @blur="isFocused = false"
       :disabled="!isCut"
-    ></v-textarea>
+    >
+      <template v-slot:prepend-inner>
+        <span :style="{fontSize: '15px', fontFamily: 'monospace'}">CGAC</span>
+      </template>
+    </v-textarea>
 
     <!-- Template Coding Strand-->
-    <div class="text-center template_strand_bakground" style="left: 10%; top: 56%; padding: 0px 17.5px;">
+    <div class="text-center template_strand_bakground" style="left: 8.5%; top: 56%; padding: 0px 17.5px;">
       <span v-if="isCut" class="template_strand_text variable_text">{{ lowerPromoterSequence }}</span>
     </div>
 
@@ -43,7 +46,7 @@
     ></div>
 
     <!-- Overhang Suffix -->
-    <div class="text-center template_strand_overhang_bakground" style="left: 84%; top: 56%; padding: 0px 17.5px;">
+    <div class="text-center template_strand_overhang_bakground" style="left: 86%; top: 56%; padding: 0px 17.5px;">
       <span
         v-if="isCut"
         :class="['template_strand_overhang_text', { 'focused': isFocused || localCloneUpperPromoterSequence.length > 0}]"
@@ -56,7 +59,7 @@
     <div
       v-if="isCut"
       :class="['text-center', 'h10_h35_background', { 'hovered': isHovered, 'focused': isFocused }]"
-      style="left: 19.5%; top: 34.75%; padding: 0px 17.5px;"
+      style="left: 19%; top: 34.75%; padding: 0px 17.5px;"
     >
       <span class="h10_h35_text">-35</span>
     </div>
@@ -65,7 +68,7 @@
     <div
       v-if="isCut"
       :class="['text-center', 'h10_h35_background', { 'hovered': isHovered, 'focused': isFocused }]"
-      style="left: 68.75%; top: 34.75%; padding: 0px 17.5px;"
+      style="left: 69.5%; top: 34.75%; padding: 0px 17.5px;"
     >
       <span class="h10_h35_text">-10</span>
     </div>
@@ -107,7 +110,7 @@ export default {
   computed: {
     divLeftPositions() {
       const totalDivs = 36;
-      const startLeft = 61;
+      const startLeft = 55;
       const endLeft = 369;
       const interval = (endLeft - startLeft) / (totalDivs - 1);
       const positions = [];
@@ -199,6 +202,7 @@ export default {
 .template_strand_text {
   color: #ffffff84;
   font-family: monospace;
+  font-size: 15.25px;
 }
 .template_strand_overhang_bakground {
   height: 13px;
@@ -214,6 +218,7 @@ export default {
 .template_strand_overhang_text {
   color: #C7D2E7;
   font-family: monospace;
+  font-size: 15.25px;
 }
 .template_strand_overhang_text.focused {
   color: #ffffff84;
@@ -222,6 +227,10 @@ export default {
   position: absolute;
   top: 63%;
   border-left: 9px solid #ffffff;
-  height: 1px;
+  height: 3px;
+}
+::v-deep .v-textarea textarea {
+  font-family: monospace !important;
+  font-size: 15px !important;
 }
 </style>
