@@ -40,7 +40,7 @@
               <div
                 v-for="(sequence, index) in upperSequences" 
                 :key="index"
-                class="bp-text upper-bp-text"
+                class="bp-text upper-bp-text preserve-whitespace"
                 :style="{ 
                   left: sequence.left || '',
                   right: sequence.right || '',
@@ -53,7 +53,7 @@
               <div
                 v-for="(sequence, index) in lowerSequences" 
                 :key="index"
-                class="bp-text lower-bp-text"
+                class="bp-text lower-bp-text preserve-whitespace"
                 :style="{ 
                   left: sequence.left || '',
                   right: sequence.right || '',
@@ -63,7 +63,7 @@
               >{{ sequence.text }}</div>
               
               <!-- -10 Label -->
-              <div class="text-center h10_h35_background" id="h10_background" style="left: 29.95%; padding: 0px 10.5px;">
+              <div class="text-center h10_h35_background" id="h10_background" style="left: 30.5%; padding: 0px 10.5px;">
                 <span class="h10_h35_text" id="h10_text">-10</span>
               </div>
 
@@ -320,18 +320,12 @@ export default {
   },
   created() {
     this.upperSequences = [
-      { text: 'TTC', left: '0px', color: '#FFA500' },
-      { text: this.upstreamUpperOverhang, left: '27px', color: '#747475' },
-      { text: this.inSituUpperPromoterSequence, left: '50%', transform: 'translate(-50%, -50%)', color: '#747475' },
-      { text: 'GCGG', right: '27px', color: '#FFA500' },
-      { text: 'GAA', right: '0px', color: '#FFA500' },
+      { text: 'TTC                                                  GCGGGAA', left: '50%', transform: 'translate(-50%, -50%)', color: '#FFA500' },
+      { text: '   CGACTCCGGGCGCTATCATGCCATACCGCGAAAGGTTTTGCACCATTCGT       ', left: '50%', transform: 'translate(-50%, -50%)', color: '#747475' },
     ];
     this.lowerSequences = [
-      { text: 'AAG', left: '0px', color: '#FFA500' },
-      { text: 'GCTG', left: '27px', color: '#FFA500' },
-      { text: this.inSituLowerPromoterSequence, left: '50%', transform: 'translate(-50%, -50%)', color: '#747475' },
-      { text: this.downstreamLowerOverhang, right: '27px', color: '#747475' },
-      { text: 'CTT', right: '0px', color: '#FFA500' },
+    { text: 'AAGGCTG                                                  CTT', left: '50%', transform: 'translate(-50%, -50%)', color: '#FFA500' },
+    { text: '       AGGCCCGCGATAGTACGGTATGGCGCTTTCCAAAACGTGGTAAGCACGCC   ', left: '50%', transform: 'translate(-50%, -50%)', color: '#747475' },
     ];
   },
   watch: {
@@ -355,16 +349,12 @@ export default {
 
     update_sequences() {
       // Set in Situ promoter to blank
-      this.upstreamUpperOverhang = '';
       this.inSituUpperPromoterSequence = '',
       this.inSituLowerPromoterSequence = '';
-      this.downstreamLowerOverhang =  '';
 
       // Update graphic
-      this.upperSequences[1].text = this.upstreamUpperOverhang;
-      this.upperSequences[2].text = this.inSituUpperPromoterSequence;
-      this.lowerSequences[2].text = this.inSituLowerPromoterSequence;
-      this.lowerSequences[3].text = this.downstreamLowerOverhang;
+      this.upperSequences[1].text = this.inSituUpperPromoterSequence;
+      this.lowerSequences[1].text = this.inSituLowerPromoterSequence;
     },
 
     update_h10_h35_labels() {
@@ -496,10 +486,8 @@ export default {
     },
 
     updateGraphic_PostLigate() {
-      this.upperSequences[1].text = this.upstreamUpperOverhang;
-      this.upperSequences[2].text = this.inSituUpperPromoterSequence;
-      this.lowerSequences[2].text = this.inSituLowerPromoterSequence;
-      this.lowerSequences[3].text = this.downstreamLowerOverhang;
+      this.upperSequences[1].text = '   ' + this.upstreamUpperOverhang + this.inSituUpperPromoterSequence + '       ';
+      this.lowerSequences[1].text = '       ' + this.inSituLowerPromoterSequence + this.downstreamLowerOverhang + '   ';
     },
 
     get_complement(strand) {
@@ -581,5 +569,9 @@ export default {
   top: 50%;
   width: 4px;
   height: 18px;
+}
+
+.preserve-whitespace {
+  white-space: pre; /* This preserves white spaces */
 }
 </style>
