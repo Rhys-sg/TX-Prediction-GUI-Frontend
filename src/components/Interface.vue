@@ -154,7 +154,7 @@
                 <span style="color: white; font-size: 36px;">Promoter</span>
               </div>
 
-              <TextInput style="padding-top: 17px;"
+              <TextInput style="padding-top: 22px;"
                 :isCut="isCut"
                 :defaultUpdater="defaultUpdater"
                 :blankUpdater="blankUpdater"
@@ -526,7 +526,7 @@ export default {
 }
 .bp-text {
   position: absolute;
-  font: 11.5px "Monaco", monospace, sans-serif;
+  font: 11px "Monaco", monospace, sans-serif;
   letter-spacing: 0.5px;
   font-weight: 550;
   transform: translate(0%, -50%);
