@@ -42,7 +42,7 @@
       class="hl"
       :style="{
           left: left + 'px',
-          display: initedDefault && localCloneUpperPromoterSequence.length > 0 && changedBP[index] ? 'block' : 'none',
+          display: initedDefault && localCloneUpperPromoterSequence.length > 0 && (isBsaISite(index) || changedBP[index]) ? 'block' : 'none',
           borderLeftColor: isBsaISite(index) ? 'red' : '#ffffff' // Highlight red if it's part of a BsaI site
         }"
     ></div>
