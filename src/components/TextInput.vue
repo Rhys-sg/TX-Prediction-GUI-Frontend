@@ -38,10 +38,12 @@
     <!-- Render evenly spaced divs -->
     <div
       v-for="(left, index) in divLeftPositions"
-      :key="index" class="hl"
+      :key="index" 
+      class="hl"
       :style="{
           left: left + 'px',
-          display: initedDefault && localCloneUpperPromoterSequence.length > 0 && changedBP[index] ? 'block' : 'none' 
+          display: initedDefault && localCloneUpperPromoterSequence.length > 0 && changedBP[index] ? 'block' : 'none',
+          backgroundColor: isBsaISite(index) ? 'red' : '#ffffff' // Highlight red if it's part of a BsaI site
         }"
     ></div>
 
@@ -94,7 +96,6 @@ export default {
   data() {
     return {
       localCloneUpperPromoterSequence: '',
-      
       lowerPromoterSequence: this.get_complement(this.pCloneUpperPromoterSequence),
       localIsDefault: this.defaultUpdater,
       initedDefault: false,
@@ -139,9 +140,13 @@ export default {
       this.localIsDefault = (this.localCloneUpperPromoterSequence === this.defaultCloneUpperPromoterSequence);
       this.$emit('update:localCloneUpperPromoterSequence', newVal);
 
-      // Highlight matches with BsaI_sites
-      const highlightedSequence = this.highlightMatches(newVal, this.BsaI_sites);
-      this.localCloneUpperPromoterSequenceHighlighted = highlightedSequence;
+      // Log the index if a match with BsaI_sites is found
+      for (let site of this.BsaI_sites) {
+        const index = newVal.indexOf(site);
+        if (index !== -1) {
+          console.log(`Match found for ${site} at index: ${index}`);
+        }
+      }
     },
   },
   methods: {
@@ -166,15 +171,14 @@ export default {
 
       return changes;
     },
-    highlightMatches(sequence, sites) {
-      let highlighted = sequence;
-      for (const site of sites) {
-        const regex = new RegExp(site, 'g');
-        highlighted = highlighted.replace(regex, (match) => {
-          return `<span style="text-decoration: underline; text-decoration-color: red;">${match}</span>`;
-        });
+    isBsaISite(index) {
+      for (const site of this.BsaI_sites) {
+        const startIndex = this.localCloneUpperPromoterSequence.indexOf(site);
+        if (startIndex !== -1 && index >= startIndex && index < startIndex + site.length) {
+          return true;
+        }
       }
-      return highlighted;
+      return false;
     },
   }
 };
