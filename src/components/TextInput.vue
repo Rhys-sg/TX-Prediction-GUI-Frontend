@@ -101,13 +101,14 @@ export default {
       initedDefault: false,
       defaultCloneUpperPromoterSequence: 'TTTACACTTTATGCTTCCGGCTCGTATGTTGTGTGG',
       BsaI_sites: ['GGCGTC', 'CCAGAG', 'CCGCAG', 'GGTCTC'],
+      isBsaI_site: new Array(this.defaultCloneUpperPromoterSequence.length).fill(false),
       isHovered: false,
       isFocused: false,
       rules: {
         required: value => !!value || 'Required.',
         counter: value => value.length <= 36 || 'Max 20 characters',
       },
-      changedBP: new Array(36).fill(true),
+      changedBP: new Array(this.defaultCloneUpperPromoterSequence.length).fill(true),
     };
   },
   computed: {
@@ -140,13 +141,24 @@ export default {
       this.localIsDefault = (this.localCloneUpperPromoterSequence === this.defaultCloneUpperPromoterSequence);
       this.$emit('update:localCloneUpperPromoterSequence', newVal);
 
-      // Log the index if a match with BsaI_sites is found
       for (let site of this.BsaI_sites) {
-        const index = newVal.indexOf(site);
-        if (index !== -1) {
-          console.log(`Match found for ${site} at index: ${index}`);
+        let startIndex = 0;
+        while ((startIndex = newVal.indexOf(site, startIndex)) !== -1) {
+          // Mark the positions in isBsaISite as true for the length of the site
+          for (let i = startIndex; i < startIndex + site.length; i++) {
+            this.isBsaISite[i] = true;
+          }
+          console.log(this.isBsaISite);
+          startIndex++; // Continue searching from the next character
         }
       }
+      // // Log the index if a match with BsaI_sites is found
+      // for (let site of this.BsaI_sites) {
+      //   const index = newVal.indexOf(site);
+      //   if (index !== -1) {
+      //     console.log(`Match found for ${site} at index: ${index}`);
+      //   }
+      // }
     },
   },
   methods: {
