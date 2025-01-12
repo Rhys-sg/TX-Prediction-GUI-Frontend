@@ -148,18 +148,13 @@ export default {
           console.log(`Match found for ${site} at index: ${index}`);
         }
       }
-      this.isBsaISite = new Array(newVal.length).fill(false);
-      for (let site of this.BsaI_sites) {
-        let startIndex = 0;
-        while ((startIndex = newVal.indexOf(site, startIndex)) !== -1) {
-          // Mark the positions in isBsaISite as true for the length of the site
-          for (let i = startIndex; i < startIndex + site.length; i++) {
-            this.isBsaISite[i] = true;
-          }
-          console.log(`Match found for ${site} at index: ${startIndex}`);
-          startIndex++; // Continue searching from the next character
+      this.isBsaISite = newVal.map((value, idx) => {
+        const isSite = this.BsaI_sites.includes(value);
+        if (isSite) {
+          console.log(`Match found for ${value} at index: ${idx}`); 
         }
-      }
+        return isSite;
+      });
     },
   },
   methods: {
