@@ -43,7 +43,7 @@
       :style="{
           left: left + 'px',
           display: initedDefault && localCloneUpperPromoterSequence.length > 0 && changedBP[index] ? 'block' : 'none',
-          borderLeftColor: isBsaISite(index) ? 'red' : '#ffffff' // Highlight red if it's part of a BsaI site
+          borderLeftColor: isBsaISite[index] ? '#ED0A0A' : '#ffffff84' // Highlight red if it's part of a BsaI site
         }"
     ></div>
 
@@ -101,6 +101,7 @@ export default {
       initedDefault: false,
       defaultCloneUpperPromoterSequence: 'TTTACACTTTATGCTTCCGGCTCGTATGTTGTGTGG',
       BsaI_sites: ['GGCGTC', 'CCAGAG', 'CCGCAG', 'GGTCTC'],
+      isBsaISite: new Array(this.defaultCloneUpperPromoterSequence.length).fill(false),
       isHovered: false,
       isFocused: false,
       rules: {
@@ -147,6 +148,18 @@ export default {
           console.log(`Match found for ${site} at index: ${index}`);
         }
       }
+      this.isBsaISite = new Array(newVal.length).fill(false);
+      for (let site of this.BsaI_sites) {
+        let startIndex = 0;
+        while ((startIndex = newVal.indexOf(site, startIndex)) !== -1) {
+          // Mark the positions in isBsaISite as true for the length of the site
+          for (let i = startIndex; i < startIndex + site.length; i++) {
+            this.isBsaISite[i] = true;
+          }
+          console.log(`Match found for ${site} at index: ${startIndex}`);
+          startIndex++; // Continue searching from the next character
+        }
+      }
     },
   },
   methods: {
@@ -170,15 +183,6 @@ export default {
       }
 
       return changes;
-    },
-    isBsaISite(index) {
-      for (const site of this.BsaI_sites) {
-        const startIndex = this.localCloneUpperPromoterSequence.indexOf(site);
-        if (startIndex !== -1 && index >= startIndex && index < startIndex + site.length) {
-          return true;
-        }
-      }
-      return false;
     },
   }
 };
