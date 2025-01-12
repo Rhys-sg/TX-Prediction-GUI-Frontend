@@ -42,7 +42,7 @@
       class="hl"
       :style="{
           left: left + 'px',
-          display: initedDefault && localCloneUpperPromoterSequence.length > 0 && changedBP[index] ? 'block' : 'none',
+          display: isBsaISite(index) || (initedDefault && localCloneUpperPromoterSequence.length > 0 && changedBP[index]) ? 'block' : 'none',
           borderLeftColor: isBsaISite(index) ? 'red' : '#ffffff' // Highlight red if it's part of a BsaI site
         }"
     ></div>
@@ -140,21 +140,6 @@ export default {
       this.changedBP = this.trackChanges(this.defaultCloneUpperPromoterSequence, this.localCloneUpperPromoterSequence);
       this.localIsDefault = (this.localCloneUpperPromoterSequence === this.defaultCloneUpperPromoterSequence);
       this.$emit('update:localCloneUpperPromoterSequence', newVal);
-
-      // Reset the isBsa_site array
-      this.isBsa_site.fill(false);
-
-      // Update isBsa_site for matching indices
-      for (const site of this.BsaI_sites) {
-        let startIndex = newVal.indexOf(site);
-        while (startIndex !== -1) {
-          for (let i = 0; i < site.length; i++) {
-            this.isBsa_site[startIndex + i] = true;
-          }
-          startIndex = newVal.indexOf(site, startIndex + 1); // Check for additional matches
-        }
-      }
-      console.log(this.isBsa_site);
     },
   },
   methods: {
