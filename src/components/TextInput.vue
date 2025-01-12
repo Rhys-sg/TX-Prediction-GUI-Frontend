@@ -7,8 +7,14 @@
       the default.
   -->
   <v-container style="padding: 0px;">
+    <!-- Render Highlighted Sequence -->
+    <div 
+      v-if="isCut" 
+      v-html="localCloneUpperPromoterSequenceHighlighted" 
+      style="font-family: monospace; white-space: pre; word-wrap: break-word;"
+    ></div>
 
-    <!-- Base Text Entry Area -->
+    <!-- Original Text Entry Area -->
     <v-textarea 
       v-model="localCloneUpperPromoterSequence"
       hide-details="auto"
@@ -30,20 +36,10 @@
       </template>
     </v-textarea>
 
-    <!-- Template Coding Strand-->
+    <!-- Template Coding Strand -->
     <div class="text-center template_strand_bakground" style="left: 8.5%; top: 56%; padding: 0px 17.5px;">
       <span v-if="isCut" class="template_strand_text variable_text">{{ lowerPromoterSequence }}</span>
     </div>
-
-    <!-- Render evenly spaced divs -->
-    <div
-      v-for="(left, index) in divLeftPositions"
-      :key="index" class="hl"
-      :style="{
-          left: left + 'px',
-          display: initedDefault && localCloneUpperPromoterSequence.length > 0 && changedBP[index] ? 'block' : 'none' 
-        }"
-    ></div>
 
     <!-- Overhang Suffix -->
     <div class="text-center template_strand_overhang_bakground" style="left: 86%; top: 56%; padding: 0px 17.5px;">
@@ -94,6 +90,7 @@ export default {
   data() {
     return {
       localCloneUpperPromoterSequence: '',
+      localCloneUpperPromoterSequenceHighlighted: '',
       lowerPromoterSequence: this.get_complement(this.pCloneUpperPromoterSequence),
       localIsDefault: this.defaultUpdater,
       initedDefault: false,
@@ -103,7 +100,7 @@ export default {
       isFocused: false,
       rules: {
         required: value => !!value || 'Required.',
-        counter: value => value.length <= 36 || 'Max 20 characters',
+        counter: value => value.length <= 36 || 'Max 36 characters',
       },
       changedBP: new Array(36).fill(true),
     };
@@ -138,13 +135,8 @@ export default {
       this.localIsDefault = (this.localCloneUpperPromoterSequence === this.defaultCloneUpperPromoterSequence);
       this.$emit('update:localCloneUpperPromoterSequence', newVal);
 
-      // Log the index if a match with BsaI_sites is found
-      for (let site of this.BsaI_sites) {
-        const index = newVal.indexOf(site);
-        if (index !== -1) {
-          console.log(`Match found for ${site} at index: ${index}`);
-        }
-      }
+      // Highlight matches with BsaI_sites
+      this.localCloneUpperPromoterSequenceHighlighted = this.highlightMatches(newVal, this.BsaI_sites);
     },
   },
   methods: {
@@ -168,6 +160,16 @@ export default {
       }
 
       return changes;
+    },
+    highlightMatches(sequence, sites) {
+      let highlighted = sequence;
+      for (const site of sites) {
+        const regex = new RegExp(site, 'g');
+        highlighted = highlighted.replace(regex, (match) => {
+          return `<span style="text-decoration: underline; text-decoration-color: red;">${match}</span>`;
+        });
+      }
+      return highlighted;
     },
   }
 };
@@ -231,12 +233,6 @@ export default {
 }
 .template_strand_overhang_text.focused {
   color: #ffffff84;
-}
-.hl {
-  position: absolute;
-  top: 63%;
-  border-left: 9px solid #ffffff;
-  height: 3px;
 }
 ::v-deep .v-textarea textarea {
   font-family: monospace !important;
