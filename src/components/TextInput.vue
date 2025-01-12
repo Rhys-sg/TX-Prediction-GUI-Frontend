@@ -141,25 +141,20 @@ export default {
       this.localIsDefault = (this.localCloneUpperPromoterSequence === this.defaultCloneUpperPromoterSequence);
       this.$emit('update:localCloneUpperPromoterSequence', newVal);
 
-      this.isBsaI_site = new Array(newVal.length).fill(false);
-      for (let site of this.BsaI_sites) {
-        let startIndex = 0;
-        while ((startIndex = newVal.indexOf(site, startIndex)) !== -1) {
-          // Mark the positions in isBsaI_site as true for the length of the site
-          for (let i = startIndex; i < startIndex + site.length; i++) {
-            this.isBsaI_site[i] = true;
+      // Reset the isBsa_site array
+      this.isBsa_site.fill(false);
+
+      // Update isBsa_site for matching indices
+      for (const site of this.BsaI_sites) {
+        let startIndex = newVal.indexOf(site);
+        while (startIndex !== -1) {
+          for (let i = 0; i < site.length; i++) {
+            this.isBsa_site[startIndex + i] = true;
           }
-          console.log(this.isBsaI_site);
-          startIndex++; // Continue searching from the next character
+          startIndex = newVal.indexOf(site, startIndex + 1); // Check for additional matches
         }
       }
-      // // Log the index if a match with BsaI_sites is found
-      // for (let site of this.BsaI_sites) {
-      //   const index = newVal.indexOf(site);
-      //   if (index !== -1) {
-      //     console.log(`Match found for ${site} at index: ${index}`);
-      //   }
-      // }
+      console.log(this.isBsa_site);
     },
   },
   methods: {
