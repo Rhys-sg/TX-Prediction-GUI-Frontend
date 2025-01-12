@@ -141,14 +141,15 @@ export default {
       this.localIsDefault = (this.localCloneUpperPromoterSequence === this.defaultCloneUpperPromoterSequence);
       this.$emit('update:localCloneUpperPromoterSequence', newVal);
 
+      this.isBsaI_site = new Array(newVal.length).fill(false);
       for (let site of this.BsaI_sites) {
         let startIndex = 0;
         while ((startIndex = newVal.indexOf(site, startIndex)) !== -1) {
-          // Mark the positions in isBsaISite as true for the length of the site
+          // Mark the positions in isBsaI_site as true for the length of the site
           for (let i = startIndex; i < startIndex + site.length; i++) {
-            this.isBsaISite[i] = true;
+            this.isBsaI_site[i] = true;
           }
-          console.log(this.isBsaISite);
+          console.log(this.isBsaI_site);
           startIndex++; // Continue searching from the next character
         }
       }
