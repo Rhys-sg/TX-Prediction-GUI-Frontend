@@ -98,6 +98,7 @@ export default {
       localIsDefault: this.defaultUpdater,
       initedDefault: false,
       defaultCloneUpperPromoterSequence: 'TTTACACTTTATGCTTCCGGCTCGTATGTTGTGTGG',
+      BsaI_sites: ['GGCGTC', 'CCAGAG', 'CCGCAG', 'GGTCTC'],
       isHovered: false,
       isFocused: false,
       rules: {
@@ -136,6 +137,14 @@ export default {
       this.changedBP = this.trackChanges(this.defaultCloneUpperPromoterSequence, this.localCloneUpperPromoterSequence);
       this.localIsDefault = (this.localCloneUpperPromoterSequence === this.defaultCloneUpperPromoterSequence);
       this.$emit('update:localCloneUpperPromoterSequence', newVal);
+
+      // Log the index if a match with BsaI_sites is found
+      for (let site of this.BsaI_sites) {
+        const index = newVal.indexOf(site);
+        if (index !== -1) {
+          console.log(`Match found for ${site} at index: ${index}`);
+        }
+      }
     },
   },
   methods: {
