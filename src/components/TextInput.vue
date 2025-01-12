@@ -43,7 +43,7 @@
       :style="{
           left: left + 'px',
           display: initedDefault && localCloneUpperPromoterSequence.length > 0 && changedBP[index] ? 'block' : 'none',
-          backgroundColor: isBsaISite(index) ? 'red' : '#ffffff' // Highlight red if it's part of a BsaI site
+          borderLeftColor: isBsaISite(index) ? 'red' : '#ffffff' // Highlight red if it's part of a BsaI site
         }"
     ></div>
 
@@ -246,7 +246,7 @@ export default {
 .hl {
   position: absolute;
   top: 63%;
-  border-left: 9px solid #ffffff;
+  border-left: 9px solid;
   height: 3px;
 }
 ::v-deep .v-textarea textarea {
