@@ -1,7 +1,7 @@
 <template>
-  <!-- Text Entry Component -->
+  <!-- Text Input Component -->
   <!-- 
-      This component allows students to type the promoter sequence into a modified text entry component.
+      This component allows students to type the promoter sequence into a modified text input component.
       It automatically populates the compliment strand, includes uneditable "overhang" sequences,
       contains and inserts the default sequence, and tracks differences between the students sequence and 
       the default.
@@ -139,6 +139,16 @@ export default {
       this.changedBP = this.trackChanges(this.defaultCloneUpperPromoterSequence, this.localCloneUpperPromoterSequence);
       this.localIsDefault = (this.localCloneUpperPromoterSequence === this.defaultCloneUpperPromoterSequence);
       this.$emit('update:localCloneUpperPromoterSequence', newVal);
+
+      // Emit hasBsaI if any index has a BsaI site
+      const hasBsaI = this.localCloneUpperPromoterSequence
+        .split('')
+        .some((_, index) => this.isBsaISite(index));
+      if (hasBsaI) {
+        this.$emit('hasBsaI', true);
+      } else {
+        this.$emit('hasBsaI', false);
+      }
     },
   },
   methods: {

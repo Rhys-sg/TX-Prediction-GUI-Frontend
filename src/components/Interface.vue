@@ -102,32 +102,32 @@
                 text
                 class="interface-button"
                 @click="cut"
-                :readonly="isCut"
-                :variant="isCut ? 'outlined' : 'elevated'"
+                :readonly="isCut || hasBsaI"
+                :variant="isCut || hasBsaI ? 'outlined' : 'elevated'"
               >Cut</v-btn>
 
               <v-btn
                 text
                 class="interface-button"
                 @click="insert_default"
-                :readonly="!isCut"
-                :variant="!isCut ? 'outlined' : 'elevated'"
+                :readonly="!isCut || hasBsaI"
+                :variant="!isCut || hasBsaI ? 'outlined' : 'elevated'"
               >Default</v-btn>
 
               <v-btn
                 text
                 class="interface-button"
                 @click="predict"
-                :readonly="!isCut"
-                :variant="!isCut ? 'outlined' : 'elevated'"
+                :readonly="!isCut || hasBsaI"
+                :variant="!isCut || hasBsaI ? 'outlined' : 'elevated'"
               >Predict</v-btn>
 
               <v-btn
                 text
                 class="interface-button"
                 @click="ligate"
-                :readonly="!isCut"
-                :variant="!isCut ? 'outlined' : 'elevated'"
+                :readonly="!isCut || hasBsaI"
+                :variant="!isCut || hasBsaI ? 'outlined' : 'elevated'"
               >Ligate</v-btn>
               
             </v-card>
@@ -159,6 +159,7 @@
                 :defaultUpdater="defaultUpdater"
                 :blankUpdater="blankUpdater"
                 @update:localCloneUpperPromoterSequence="handleLocalCloneUpperPromoterSequenceUpdate"
+                @hasBsaI="hasBsaI = $event"
               ></TextInput>
               
             </v-card>
@@ -285,6 +286,7 @@ export default {
       defaultUpdater: false,
       blankUpdater: true,
       currentPromoterSequence: '',
+      hasBsaI: false,
 
       // Prediction (and observed)
       predicted_TX: 0,
