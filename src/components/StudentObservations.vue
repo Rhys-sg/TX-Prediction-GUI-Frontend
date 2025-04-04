@@ -109,6 +109,7 @@ export default {
           student_observations: this.student_observations,
         });
         this.terms = response.data.terms || [];
+        console.log(this.terms);
       } catch (error) {
         console.error('An error occurred while querying terms.', error);
         this.terms = [];
