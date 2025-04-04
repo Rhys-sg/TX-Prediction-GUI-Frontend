@@ -5,6 +5,7 @@
   :lastName="lastName"
   :email="email"
   @student-ligations="viewStudentLigations"
+  @student-observations="viewStudentObservations"
   @new-input="newInputActive"
   @user-login="userLoginActive"
   @user-account="userAccountActive"/>
@@ -206,6 +207,14 @@
           />
         </v-dialog>
 
+        <!-- Student Observations Database -->
+        <v-dialog v-model="isViewStudentObservationsActive">
+          <StudentObservations
+            :backendUrl="backendUrl"
+            @close="isViewStudentObservationsActive = false"
+          />
+        </v-dialog>
+
         <!-- New input popup -->
         <v-dialog v-model="isNewInputActive">
           <NewInput
@@ -253,6 +262,7 @@ import BarChart from './BarChart'
 import TextInput from './TextInput'
 import LigateEntry from './LigateEntry'
 import StudentLigations from './StudentLigations'
+import StudentObservations from './StudentObservations'
 import NewInput from './NewInput'
 import UserLogin from './UserLogin'
 import UserAccount from './UserAccount'
@@ -299,6 +309,9 @@ export default {
 
       // View student ligation orders
       isViewStudentLigationsActive: false,
+
+      // View student observation orders
+      isViewStudentObservationsActive: false,
 
       // New input
       isNewInputActive: false,
@@ -442,6 +455,10 @@ export default {
     
     viewStudentLigations () {
       this.isViewStudentLigationsActive = true;
+    },
+
+    viewStudentObservations () {
+      this.isViewStudentObservationsActive = true;
     },
 
     newInputActive () {
