@@ -74,7 +74,7 @@ export default {
     },
     selectedSchool(newSchool) {
       if (newSchool) {
-        this.queryObservations();
+        this.queryTermsBySchool();
       }
     }
   },
