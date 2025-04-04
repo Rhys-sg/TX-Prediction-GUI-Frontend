@@ -15,7 +15,7 @@
             v-model="selectedSchool"
             :items="schools"
             label="School"
-            @change="queryTermsBySchool"
+            @change="queryObservations"
           ></v-combobox>
         </v-col>
 
@@ -31,7 +31,7 @@
         <template v-if="selectedSchool !== '' && selectedTerm !== ''">
           <v-col cols="12" md="12">
             <v-data-table
-              :items="studentLigations"
+              :items="student_observations"
               fixed-header
               height="295"
             ></v-data-table>
@@ -59,7 +59,7 @@ export default {
   },
   data() {
     return {
-      studentLigations: [],
+      student_observations: [],
       selectedSchool: '',
       selectedTerm: '',
       schools: [],
@@ -69,12 +69,12 @@ export default {
   watch: {
     selectedTerm(newVal, oldVal) {
       if (newVal !== oldVal && this.selectedTerm !== '' && this.selectedSchool !== '') {
-        this.querySimulatedLigation();
+        this.queryObservations();
       }
     },
     selectedSchool(newSchool) {
       if (newSchool) {
-        this.queryTermsBySchool();
+        this.queryObservations();
       }
     }
   },
@@ -103,25 +103,37 @@ export default {
       }
     },
 
-    async querySimulatedLigation() {
+    async queryObservations() {
+      try {
+        const response = await axios.post(`${this.backendUrl}/query_observations_by_school_and_term`, {
+          student_observations: this.student_observations,
+        });
+        this.terms = response.data.terms || [];
+      } catch (error) {
+        console.error('An error occurred while querying terms.', error);
+        this.terms = [];
+      }
+    },
+
+    async queryObservations() {
       try {
         const response = await axios.post(`${this.backendUrl}/query_simulated_ligation`, {
           school: this.selectedSchool,
           term: this.selectedTerm
         });
-        this.studentLigations = response.data.studentLigations;
+        this.student_observations = response.data.student_observations;
       } catch (error) {
         console.error('An error occurred.', error);
       }
     },
 
     download() {
-      if (this.studentLigations.length === 0) {
+      if (this.student_observations.length === 0) {
         alert("No data to download");
         return;
       }
 
-      const csvContent = this.convertToCSV(this.studentLigations);
+      const csvContent = this.convertToCSV(this.student_observations);
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');
       const url = URL.createObjectURL(blob);

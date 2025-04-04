@@ -11,7 +11,7 @@
         <!-- Centered content -->
         <v-col class="d-flex justify-center" cols="auto">
           <v-btn @click="$emit('student-ligations')">Student Ligations</v-btn>
-          <v-btn @click="$emit('student-observations')">Student Observations</v-btn>
+          <!-- <v-btn @click="$emit('student-observations')">Student Observations</v-btn> -->
           <v-btn @click="$emit('new-input')">New Input</v-btn>
         </v-col>
 
