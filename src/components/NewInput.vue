@@ -13,26 +13,27 @@
     @submit.prevent="newInputSubmit()"
   >
     <v-card title="New Input" style="width: 800px; max-height: 625px; top: 50%; left: 50%; transform: translate(-50%, 0%);">
-
       <v-card-text style="padding-bottom: 0px;">
-        <v-col cols="12" md="4">
-          <v-combobox
-            v-model="selectedSchool"
-            :items="schools"
-            label="School"
-            @change="queryTermsBySchool"
-          ></v-combobox>
-        </v-col>
+        <v-row>
+          <v-col cols="12" md="4">
+            <v-combobox
+              v-model="selectedSchool"
+              :items="schools"
+              label="School"
+              @change="queryTermsBySchool"
+            ></v-combobox>
+          </v-col>
 
-        <v-col cols="12" md="4">
-          <v-combobox
-            v-model="selectedTerm"
-            :items="terms"
-            label="Semester/Section"
-            :disabled="selectedSchool === ''"
-          ></v-combobox>
-        </v-col>
-
+          <v-col cols="12" md="4">
+            <v-combobox
+              v-model="selectedTerm"
+              :items="terms"
+              label="Semester/Section"
+              :disabled="selectedSchool === ''"
+            ></v-combobox>
+          </v-col>
+        </v-row>
+        
         <h4 style="padding-bottom: 16px;">Students</h4>
         <v-row v-for="(inputSet, index) in internalInputSets" :key="index">
 
