@@ -31,7 +31,6 @@
         <template v-if="selectedSchool !== '' && selectedTerm !== ''">
           <v-col cols="12" md="12">
             <v-data-table
-              :headers="headers"
               :items="student_observations"
               fixed-header
               height="295"
