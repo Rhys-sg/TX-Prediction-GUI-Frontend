@@ -28,6 +28,15 @@
           ></v-combobox>
         </v-col>
 
+        <v-col cols="12" md="4">
+          <v-btn
+            :text="showingGraph ? 'Show Table' : 'Show Graph'"
+            variant="text"
+            @click="toggleGraph"
+            :disabled="!selectedSchool || !selectedTerm"
+          ></v-btn>
+        </v-col>
+
         <template v-if="selectedSchool && selectedTerm && !showingGraph">
           <v-col cols="12" md="12">
             <v-data-table
@@ -52,12 +61,6 @@
 
     <v-card-actions style="display: flex; justify-content: center; padding-top: 0px; padding-bottom: 12px; padding-right: 22px;">
       <v-btn text="Close" variant="text" @click="$emit('close')">Close</v-btn>
-      <v-btn
-        text="Show Graph"
-        variant="text"
-        @click="show_graph"
-        :disabled="!selectedSchool || !selectedTerm"
-      >Show Graph</v-btn>
       <v-btn text="Download" variant="tonal" @click="download">Download</v-btn>
     </v-card-actions>
   </v-card>
@@ -132,6 +135,13 @@ export default {
         this.student_observations = response.data.student_observations || [];
       } catch (error) {
         console.error('Error fetching observations:', error);
+      }
+    },
+    toggleGraph() {
+      if (this.showingGraph) {
+        this.showingGraph = false;
+      } else {
+        this.show_graph();
       }
     },
     async show_graph() {
