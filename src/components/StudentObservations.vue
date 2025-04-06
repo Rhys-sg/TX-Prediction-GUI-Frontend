@@ -28,7 +28,7 @@
           ></v-combobox>
         </v-col>
 
-        <template v-if="selectedSchool !== '' && selectedTerm !== ''">
+        <template v-if="selectedSchool && selectedTerm && !showingGraph">
           <v-col cols="12" md="12">
             <v-data-table
               :items="student_observations"
@@ -41,11 +41,23 @@
             </v-data-table>
           </v-col>
         </template>
+
+        <template v-if="showingGraph">
+          <v-col cols="12" md="12">
+            <StudentObservationsGraph :graph-data="graphData" />
+          </v-col>
+        </template>
       </v-row>
     </v-card-text>
 
     <v-card-actions style="display: flex; justify-content: center; padding-top: 0px; padding-bottom: 12px; padding-right: 22px;">
       <v-btn text="Close" variant="text" @click="$emit('close')">Close</v-btn>
+      <v-btn
+        text="Show Graph"
+        variant="text"
+        @click="show_graph"
+        :disabled="!selectedSchool || !selectedTerm"
+      >Show Graph</v-btn>
       <v-btn text="Download" variant="tonal" @click="download">Download</v-btn>
     </v-card-actions>
   </v-card>
@@ -53,8 +65,12 @@
 
 <script>
 import axios from 'axios';
+import StudentObservationsGraph from './StudentObservationsGraph.vue';
 
 export default {
+  components: {
+    StudentObservationsGraph
+  },
   props: {
     backendUrl: {
       type: String,
@@ -68,14 +84,13 @@ export default {
       selectedTerm: '',
       schools: [],
       terms: [],
-      headers: [
-        { text: 'Sequence', value: 'Sequence' },
-      ]
+      graphData: null,
+      showingGraph: false,
     };
   },
   watch: {
     selectedTerm(newVal, oldVal) {
-      if (newVal !== oldVal && this.selectedTerm !== '' && this.selectedSchool !== '') {
+      if (newVal !== oldVal && this.selectedTerm && this.selectedSchool) {
         this.queryObservations();
       }
     },
@@ -94,10 +109,9 @@ export default {
         const response = await axios.post(`${this.backendUrl}/query_schools`);
         this.schools = response.data.schools;
       } catch (error) {
-        console.error('An error occurred.', error);
+        console.error('Error fetching schools:', error);
       }
     },
-
     async queryTermsBySchool() {
       try {
         const response = await axios.post(`${this.backendUrl}/query_terms_by_school`, {
@@ -105,11 +119,10 @@ export default {
         });
         this.terms = response.data.terms || [];
       } catch (error) {
-        console.error('An error occurred while querying terms.', error);
+        console.error('Error fetching terms:', error);
         this.terms = [];
       }
     },
-
     async queryObservations() {
       try {
         const response = await axios.post(`${this.backendUrl}/query_observations_by_school_and_term`, {
@@ -117,37 +130,43 @@ export default {
           term: this.selectedTerm
         });
         this.student_observations = response.data.student_observations || [];
-        console.log(this.student_observations);
       } catch (error) {
-        console.error('An error occurred while querying terms.', error);
-        this.terms = [];
+        console.error('Error fetching observations:', error);
       }
     },
-
+    async show_graph() {
+      try {
+        const response = await axios.post(`${this.backendUrl}/get_student_observations_graph_data`, {
+          school: this.selectedSchool,
+          term: this.selectedTerm
+        });
+        this.graphData = response.data;
+        this.showingGraph = true;
+      } catch (error) {
+        console.error('Error fetching graph data:', error);
+      }
+    },
     download() {
       if (this.student_observations.length === 0) {
         alert("No data to download");
         return;
       }
-
       const csvContent = this.convertToCSV(this.student_observations);
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');
       const url = URL.createObjectURL(blob);
-
       link.setAttribute('href', url);
-      link.setAttribute('download', 'student_Observations.csv');
+      link.setAttribute('download', 'student_observations.csv');
       link.style.visibility = 'hidden';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
     },
-
     convertToCSV(data) {
       const headers = Object.keys(data[0]).join(',') + '\n';
       const rows = data.map(obj => Object.values(obj).join(',')).join('\n');
       return headers + rows;
-    },
+    }
   }
 };
 </script>
