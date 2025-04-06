@@ -13,7 +13,26 @@
     @submit.prevent="newInputSubmit()"
   >
     <v-card title="New Input" style="width: 800px; max-height: 625px; top: 50%; left: 50%; transform: translate(-50%, 0%);">
+
       <v-card-text style="padding-bottom: 0px;">
+        <v-col cols="12" md="4">
+          <v-combobox
+            v-model="selectedSchool"
+            :items="schools"
+            label="School"
+            @change="queryTermsBySchool"
+          ></v-combobox>
+        </v-col>
+
+        <v-col cols="12" md="4">
+          <v-combobox
+            v-model="selectedTerm"
+            :items="terms"
+            label="Semester/Section"
+            :disabled="selectedSchool === ''"
+          ></v-combobox>
+        </v-col>
+
         <h4 style="padding-bottom: 16px;">Students</h4>
         <v-row v-for="(inputSet, index) in internalInputSets" :key="index">
 
@@ -166,6 +185,10 @@ export default {
         v => !!v || 'Observed TX Rate is required',
       ],
       validDomains: [],
+      selectedSchool: '',
+      selectedTerm: '',
+      schools: [],
+      terms: []
     };
   },
   watch: {
@@ -181,9 +204,20 @@ export default {
     internalInputNotes(newVal) {
       this.$emit('update:internalInputNotes', newVal);
     },
+    selectedTerm(newVal, oldVal) {
+      if (newVal !== oldVal && this.selectedTerm !== '' && this.selectedSchool !== '') {
+        this.querySimulatedLigation();
+      }
+    },
+    selectedSchool(newSchool) {
+      if (newSchool) {
+        this.queryTermsBySchool();
+      }
+    }
   },
   created() {
     this.getValidDomain();
+    this.querySchools();
   },
   methods: {
     addInputSet() {
@@ -218,6 +252,27 @@ export default {
         })
       } catch (error) {
         console.error('An error occurred.', error)
+      }
+    },
+
+    async querySchools() {
+      try {
+        const response = await axios.post(`${this.backendUrl}/query_schools`);
+        this.schools = response.data.schools;
+      } catch (error) {
+        console.error('An error occurred.', error);
+      }
+    },
+
+    async queryTermsBySchool() {
+      try {
+        const response = await axios.post(`${this.backendUrl}/query_terms_by_school`, {
+          school: this.selectedSchool,
+        });
+        this.terms = response.data.terms || [];
+      } catch (error) {
+        console.error('An error occurred while querying terms.', error);
+        this.terms = [];
       }
     },
 
