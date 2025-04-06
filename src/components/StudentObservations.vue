@@ -31,7 +31,7 @@
           ></v-combobox>
         </v-col>
 
-        <v-col cols="12" md="4">
+        <v-col cols="12" md="4" class="d-flex align-center">
           <v-btn
             :text="showingGraph ? 'Show Table' : 'Show Graph'"
             variant="text"
