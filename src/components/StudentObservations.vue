@@ -1,12 +1,12 @@
 <template>
-  <v-card title="Student Ligations" style="width: 900px; height: 600px; top: 50%; left: 50%; transform: translate(-50%, 0%);">
-    <!-- Student Ligations Component -->
+  <v-card title="Student Observations" style="width: 900px; height: 600px; top: 50%; left: 50%; transform: translate(-50%, 0%);">
+    <!-- Student Observations Component -->
     <!-- 
-      This component queries and displays a table of student ligations and provides functionality to download the data as a CSV file. 
+      This component queries and displays a table of student Observations and provides functionality to download the data as a CSV file. 
       The table is populated with data queryed from a backend API, and the CSV download feature is triggered by a button click.
-      The form does not handle submissions/insertions but provides options to close the modal or download the data.
+      The form does not handle submissions/insertions but provides options to close the module or download the data.
 
-      Student Ligations are queried by school and term, selected using a dropdown <v-combobox> object.
+      Student Observations are queried by school and term, selected using a dropdown <v-combobox> object.
     -->
     <v-card-text>
       <v-row>
@@ -140,7 +140,7 @@ export default {
       const url = URL.createObjectURL(blob);
 
       link.setAttribute('href', url);
-      link.setAttribute('download', 'student_ligations.csv');
+      link.setAttribute('download', 'student_Observations.csv');
       link.style.visibility = 'hidden';
       document.body.appendChild(link);
       link.click();
