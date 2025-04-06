@@ -106,10 +106,11 @@ export default {
     async queryObservations() {
       try {
         const response = await axios.post(`${this.backendUrl}/query_observations_by_school_and_term`, {
-          student_observations: this.student_observations,
+          school: this.selectedSchool,
+          term: this.selectedTerm
         });
-        this.terms = response.data.terms || [];
-        console.log(this.terms);
+        this.student_observations = response.data.student_observations || [];
+        console.log(this.student_observations);
       } catch (error) {
         console.error('An error occurred while querying terms.', error);
         this.terms = [];
