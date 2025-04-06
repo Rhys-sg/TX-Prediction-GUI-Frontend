@@ -116,18 +116,6 @@ export default {
       }
     },
 
-    async queryObservations() {
-      try {
-        const response = await axios.post(`${this.backendUrl}/query_simulated_ligation`, {
-          school: this.selectedSchool,
-          term: this.selectedTerm
-        });
-        this.student_observations = response.data.student_observations;
-      } catch (error) {
-        console.error('An error occurred.', error);
-      }
-    },
-
     download() {
       if (this.student_observations.length === 0) {
         alert("No data to download");
