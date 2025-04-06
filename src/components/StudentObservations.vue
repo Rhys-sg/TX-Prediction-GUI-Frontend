@@ -1,5 +1,8 @@
 <template>
-  <v-card title="Student Observations" style="width: 900px; height: 600px; top: 50%; left: 50%; transform: translate(-50%, 0%);">
+  <v-card
+    title="Student Observations"
+    style="width: 900px; height: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+  >
     <!-- Student Observations Component -->
     <!-- 
       This component queries and displays a table of student Observations and provides functionality to download the data as a CSV file. 
