@@ -19,6 +19,7 @@
             <v-combobox
               v-model="selectedSchool"
               :items="schools"
+              :rules="schoolRules"
               label="School"
               @change="queryTermsBySchool"
             ></v-combobox>
@@ -28,12 +29,13 @@
             <v-combobox
               v-model="selectedTerm"
               :items="terms"
+              :rules="termRules"
               label="Semester/Section"
               :disabled="selectedSchool === ''"
             ></v-combobox>
           </v-col>
         </v-row>
-        
+
         <h4 style="padding-bottom: 16px;">Students</h4>
         <v-row v-for="(inputSet, index) in internalInputSets" :key="index">
 
@@ -185,6 +187,12 @@ export default {
       observedTXRateRules: [
         v => !!v || 'Observed TX Rate is required',
       ],
+      schoolRules: [
+        v => !!v || 'School is required',
+      ],
+      TermRules: [
+        v => !!v || 'Term is required',
+      ],
       validDomains: [],
       selectedSchool: '',
       selectedTerm: '',
@@ -247,6 +255,8 @@ export default {
         const response = await axios.post(`${this.backendUrl}/insert_observed_TX`, {
           codingStrand: this.internalCurrentPromoterSequence,
           account_email: this.email,
+          school: this.selectedSchool,
+          term: this.selectedTerm,
           students: this.internalInputSets.map(entry => `${entry.email}: ${entry.firstname} ${entry.lastname}`).join(', '),
           observed_TX: this.internalInputObservedTX,
           notes: this.internalInputNotes,
