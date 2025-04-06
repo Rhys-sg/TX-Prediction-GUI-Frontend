@@ -34,7 +34,11 @@
               :items="student_observations"
               fixed-header
               height="295"
-            ></v-data-table>
+            >
+              <template v-slot:item.Sequence="{ item }">
+                {{ item.Sequence.toUpperCase() }}
+              </template>
+            </v-data-table>
           </v-col>
         </template>
       </v-row>
@@ -63,7 +67,10 @@ export default {
       selectedSchool: '',
       selectedTerm: '',
       schools: [],
-      terms: []
+      terms: [],
+      headers: [
+        { text: 'Sequence', value: 'Sequence' },
+      ]
     };
   },
   watch: {
