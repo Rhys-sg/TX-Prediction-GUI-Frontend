@@ -70,11 +70,7 @@ export default {
       terms: [],
       headers: [
         { text: 'Sequence', value: 'Sequence' },
-        // { text: 'Observed Fluorescence', value: 'Observed TX' },
-        // { text: 'Date', value: 'Date' },
-        // { text: 'Students', value: 'Students' },
-        // { text: 'Notes', value: 'Notes' },
-      ],
+      ]
     };
   },
   watch: {
