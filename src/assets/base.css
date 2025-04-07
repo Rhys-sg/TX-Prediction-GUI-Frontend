@@ -39,7 +39,7 @@
 
 /* semantic color variables for this project */
 :root {
-  --color-background: var(rgb(235,241,255));
+  --color-background: rgb(242, 245, 254);
   --color-background-alt: var(--vt-c-purple-light);
 
   --RFP-arrow: var(--vt-c-red);
