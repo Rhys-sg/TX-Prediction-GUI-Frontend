@@ -13,7 +13,7 @@
   <!-- Center Interface -->
   <v-container class="fill-height d-flex justify-center align-center">
     <v-responsive style="max-width: 868px; height: 438px;">
-      <v-card class="py-0 outlined-grey fill-height" variant="outlined">
+      <v-card class="py-0 fill-height grid-outline">
         <v-row no-gutters class="white-bg upper-height">
 
           <!-- Content for TOP LEFT cell -->
@@ -78,7 +78,7 @@
 
           <!-- Content for TOP RIGHT cell -->
           <v-col cols="3" class="fill-height">
-            <v-card class="py-0 outlined-grey fill-height" variant="outlined">
+            <v-card class="py-0 fill-height">
               <img src="../assets/images/RFP.png" style="width: 216px; height: 196px;">
               <div class="text-center" style="
                   position: absolute;
@@ -136,7 +136,7 @@
 
           <!-- Content for BOTTOM CENTER cell -->
           <v-col cols="6" class="fill-height">
-            <v-card class="py-0 outlined-grey fill-height" variant="outlined">
+            <v-card class="py-0 fill-height">
 
               <img
                 id="promoterImage"
@@ -534,6 +534,10 @@ export default {
 .outlined-grey {
   border: 0px solid #747475 !important;
 }
+.grid-outline {
+  border: 3px solid #747475;
+  border-radius: 10px;
+}
 .fill-height {
   height: 100%;
 }
@@ -591,6 +595,6 @@ export default {
 }
 
 .preserve-whitespace {
-  white-space: pre; /* This preserves white spaces */
+  white-space: pre;
 }
 </style>
