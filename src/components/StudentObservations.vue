@@ -55,7 +55,7 @@
         </template>
 
         <template v-if="showingGraph">
-          <v-col cols="12" md="12">
+          <v-col cols="12" md="12" style="height: 295px;">
             <StudentObservationsGraph :graph-data="graphData" />
           </v-col>
         </template>
