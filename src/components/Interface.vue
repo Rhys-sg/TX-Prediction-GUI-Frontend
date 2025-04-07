@@ -254,7 +254,7 @@
     </v-responsive>
   </v-container>
 
-  <AppFooter />
+  <!-- <AppFooter /> -->
 </template>
 
 <script>
@@ -526,7 +526,7 @@ export default {
 
 <style scoped>
 .interface-background {
-  background-color: var(--color-background); 
+  background-color: var(--color-background) !important;
 }
 .white-bg {
   background-color: #ffffff;
