@@ -1,7 +1,13 @@
 <template>
+  <!-- BarChart Component -->
+  <!-- 
+    This component renders a bar chart using vue-chartjs and Chart.js. 
+    It displays two bars representing 'Predicted' and 'Observed' values with customizable colors. 
+    The chart options and data are dynamically updated based on the props provided.
+  -->
   <div class="chart-container">
-    <Scatter
-      id="my-scatter-id"
+    <Bar
+      id="my-chart-id"
       :options="chartOptions"
       :data="chartData"
     />
@@ -9,21 +15,14 @@
 </template>
 
 <script>
-import { Scatter } from 'vue-chartjs'
-import {
-  Chart as ChartJS,
-  Title,
-  Tooltip,
-  Legend,
-  PointElement,
-  LinearScale
-} from 'chart.js'
+import { Bar } from 'vue-chartjs'
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LogarithmicScale } from 'chart.js'
 
-ChartJS.register(Title, Tooltip, Legend, PointElement, LinearScale)
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LogarithmicScale)
 
 export default {
-  name: 'ScatterChart',
-  components: { Scatter },
+  name: 'BarChart',
+  components: { Bar },
   props: {
     predicted_TX: {
       type: Number,
@@ -44,8 +43,6 @@ export default {
   },
   data() {
     return {
-      predictedData: [],
-      observedData: [],
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
@@ -56,6 +53,17 @@ export default {
             }
           },
           y: {
+            type: 'logarithmic',
+            min: 1,
+            ticks: {
+              callback: function(value) {
+                const exp = Math.log10(value);
+                if (exp % 1 === 0) {
+                  return `10^${exp}`;
+                }
+                return '';
+              }
+            },
             grid: {
               display: false
             }
@@ -66,7 +74,15 @@ export default {
             display: false
           },
           title: {
-            display: false
+            display: true,
+            text: 'Relative Fluorescence',
+            font: {
+              size: 12 
+            },
+            padding: {
+              top: 10,
+              bottom: 20
+            }
           }
         }
       }
@@ -75,32 +91,12 @@ export default {
   computed: {
     chartData() {
       return {
-        datasets: [
-          {
-            data: this.predictedData,
-            backgroundColor: this.predicted_TX_color,
-            showLine: false
-          },
-          {
-            data: this.observedData,
-            backgroundColor: this.observed_TX_color,
-            showLine: false
-          }
-        ]
-      }
-    }
-  },
-  watch: {
-    predicted_TX: {
-      immediate: true,
-      handler(val) {
-        this.predictedData.push({ x: this.predictedData.length, y: val });
-      }
-    },
-    observed_TX: {
-      immediate: true,
-      handler(val) {
-        this.observedData.push({ x: this.observedData.length, y: val });
+        labels: ['Predicted', 'Observed'],
+        datasets: [{
+          data: [this.predicted_TX, this.observed_TX],
+          backgroundColor: [this.predicted_TX_color, this.observed_TX_color],
+          barThickness: 11,
+        }]
       }
     }
   }
