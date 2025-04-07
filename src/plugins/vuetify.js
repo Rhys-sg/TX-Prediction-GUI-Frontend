@@ -10,10 +10,18 @@ import 'vuetify/styles'
 
 // Composables
 import { createVuetify } from 'vuetify'
-
-// https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
-export default createVuetify({
+const vuetify = createVuetify({
   theme: {
-    defaultTheme: 'light',
+    defaultTheme: 'customLight',
+    themes: {
+      customLight: {
+        dark: false,
+        colors: {
+          background: '#f2f5fe', // This becomes --v-theme-background
+        },
+      },
+    },
   },
 })
+
+export default vuetify
