@@ -40,6 +40,7 @@
 /* semantic color variables for this project */
 :root {
   --color-background: rgb(242, 245, 254);
+  --v-theme-background: var(--color-background);
   --color-background-alt: var(--vt-c-purple-light);
 
   --RFP-arrow: var(--vt-c-red);

@@ -253,8 +253,6 @@
       </v-card>
     </v-responsive>
   </v-container>
-
-  <!-- <AppFooter /> -->
 </template>
 
 <script>
