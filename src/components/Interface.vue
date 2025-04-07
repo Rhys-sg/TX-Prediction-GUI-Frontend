@@ -11,7 +11,7 @@
   @user-account="userAccountActive"/>
 
   <!-- Center Interface -->
-  <v-container class="fill-height d-flex justify-center align-center">
+  <v-container class="fill-height d-flex justify-center align-center interface-background">
     <v-responsive style="max-width: 868px; height: 438px;">
       <v-card class="py-0 outlined-grey fill-height" variant="outlined">
         <v-row no-gutters class="white-bg upper-height">
@@ -525,6 +525,9 @@ export default {
 </script>
 
 <style scoped>
+.interface-background {
+  background-color: var(--color-background); 
+}
 .white-bg {
   background-color: #ffffff;
 }
