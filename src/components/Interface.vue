@@ -5,7 +5,7 @@
   :lastName="lastName"
   :email="email"
   @student-ligations="viewStudentLigations"
-  @student-observations="view"
+  @student-observations="viewStudentObservations"
   @new-input="newInputActive"
   @user-login="userLoginActive"
   @user-account="userAccountActive"/>
