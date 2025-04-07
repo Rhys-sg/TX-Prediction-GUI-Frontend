@@ -1,7 +1,13 @@
 <template>
+  <!-- BarChart Component -->
+  <!-- 
+    This component renders a bar chart using vue-chartjs and Chart.js. 
+    It displays two bars representing 'Predicted' and 'Observed' values with customizable colors. 
+    The chart options and data are dynamically updated based on the props provided.
+  -->
   <div class="chart-container">
-    <Scatter
-      id="scatter-chart"
+    <Bar
+      id="my-chart-id"
       :options="chartOptions"
       :data="chartData"
     />
@@ -9,53 +15,39 @@
 </template>
 
 <script>
-import { Scatter } from 'vue-chartjs'
-import {
-  Chart as ChartJS,
-  Title,
-  Tooltip,
-  Legend,
-  PointElement,
-  LinearScale,
-  LogarithmicScale
-} from 'chart.js'
+import { Bar } from 'vue-chartjs'
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LogarithmicScale } from 'chart.js'
 
-ChartJS.register(Title, Tooltip, Legend, PointElement, LinearScale, LogarithmicScale)
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LogarithmicScale)
 
 export default {
-  name: 'ScatterPlot',
-  components: { Scatter },
+  name: 'BarChart',
+  components: { Bar },
   props: {
     predicted_TX: {
       type: Number,
-      required: true
+      required: true,
     },
     observed_TX: {
       type: Number,
-      required: true
+      required: true,
     },
     predicted_TX_color: {
       type: String,
-      default: '#747475'
+      default: '#747475',
     },
     observed_TX_color: {
       type: String,
-      default: '#747475'
+      default: '#747475',
     }
   },
   data() {
     return {
-      predictedData: [],
-      observedData: [],
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
         scales: {
           x: {
-            title: {
-              display: true,
-              text: 'Measurement Order'
-            },
             grid: {
               display: false
             }
@@ -63,14 +55,13 @@ export default {
           y: {
             type: 'logarithmic',
             min: 1,
-            title: {
-              display: true,
-              text: 'Relative Fluorescence'
-            },
             ticks: {
-              callback: function (value) {
+              callback: function(value) {
                 const exp = Math.log10(value);
-                return exp % 1 === 0 ? `10^${exp}` : '';
+                if (exp % 1 === 0) {
+                  return `10^${exp}`;
+                }
+                return '';
               }
             },
             grid: {
@@ -80,13 +71,13 @@ export default {
         },
         plugins: {
           legend: {
-            display: true
+            display: false
           },
           title: {
             display: true,
-            text: 'Relative Fluorescence (Scatter)',
+            text: 'Relative Fluorescence',
             font: {
-              size: 12
+              size: 12 
             },
             padding: {
               top: 10,
@@ -100,27 +91,13 @@ export default {
   computed: {
     chartData() {
       return {
-        datasets: [
-          {
-            label: 'Predicted',
-            data: this.predictedData,
-            backgroundColor: this.predicted_TX_color
-          },
-          {
-            label: 'Observed',
-            data: this.observedData,
-            backgroundColor: this.observed_TX_color
-          }
-        ]
+        labels: ['Predicted', 'Observed'],
+        datasets: [{
+          data: [this.predicted_TX, this.observed_TX],
+          backgroundColor: [this.predicted_TX_color, this.observed_TX_color],
+          barThickness: 11,
+        }]
       }
-    }
-  },
-  watch: {
-    predicted_TX(newVal) {
-      this.predictedData.push({ x: this.predictedData.length + 1, y: newVal });
-    },
-    observed_TX(newVal) {
-      this.observedData.push({ x: this.observedData.length + 1, y: newVal });
     }
   }
 }
