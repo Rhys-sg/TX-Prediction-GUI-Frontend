@@ -192,7 +192,7 @@ export default {
   position: absolute;
   transform: translate(-50%, -50%);
   background-color: #C7D2E7;
-  border: 1px solid #ffffff84;
+  border: 1px solid #00000084;
   padding: 0px 25.5px;
   border-radius: 7px;
   display: flex;
@@ -201,13 +201,13 @@ export default {
   transition: border-color 0.1s ease;
 }
 .h10_h35_background.hovered {
-  border-color: #ffffff;
+  border-color: #000000;
 }
 .h10_h35_background.focused {
-  border: 2px solid #ffffff;
+  border: 2px solid #000000;
 }
 .h10_h35_text {
-  color: #ffffff;
+  color: #000000;
   font: 12.19px 'Monaco', monospace, sans-serif;
 }
 .template_strand_bakground {
@@ -222,7 +222,7 @@ export default {
   justify-content: center;
 }
 .template_strand_text {
-  color: #ffffff84;
+  color: #00000084;
   font-family: monospace;
   font-size: 15.25px;
 }
@@ -243,7 +243,7 @@ export default {
   font-size: 15.25px;
 }
 .template_strand_overhang_text.focused {
-  color: #ffffff84;
+  color: #00000084;
 }
 .hl {
   position: absolute;
