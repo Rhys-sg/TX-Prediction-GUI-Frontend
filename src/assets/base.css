@@ -39,7 +39,7 @@
 
 /* semantic color variables for this project */
 :root {
-  --color-background: var(--vt-c-white);
+  --color-background: var(rgb(235,241,255));
   --color-background-alt: var(--vt-c-purple-light);
 
   --RFP-arrow: var(--vt-c-red);
@@ -61,21 +61,6 @@
   --drop-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   --border-radius-window: 10px;
   --section-gap: 160px;
-}
-
-/* HAVE NOT IMPLEMENTED YET */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: var(--vt-c-black);
-    --color-background-soft: var(--vt-c-black-soft);
-    --color-background-mute: var(--vt-c-black-mute);
-
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
-
-    --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
-  }
 }
 
 *,
