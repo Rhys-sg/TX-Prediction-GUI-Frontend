@@ -55,7 +55,7 @@ export default {
           y: {
             type: 'logarithmic',
             min: 50000,
-            max: 5e7,
+            max: this.maxVal,
             ticks: {
               callback: function (value) {
                 const exp = Math.log10(value);
