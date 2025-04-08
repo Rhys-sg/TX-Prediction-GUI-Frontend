@@ -53,8 +53,8 @@ export default {
             }
           },
           y: {
-            type: 'logarithmic',
-            min: 1,
+            type: 'linear',
+            min: 50000,
             ticks: {
               callback: function(value) {
                 const exp = Math.log10(value);
@@ -84,6 +84,20 @@ export default {
               bottom: 20
             }
           }
+        },
+        annotation: {
+          annotations: [{
+            type: 'line',
+            mode: 'horizontal',
+            scaleID: 'y-axis-0',
+            value: 1000000,
+            borderColor: 'rgb(255, 0, 0)',
+            borderWidth: 1,
+            // label: {
+            //   enabled: false,
+            //   content: ''
+            // }
+          }]
         }
       }
     }
