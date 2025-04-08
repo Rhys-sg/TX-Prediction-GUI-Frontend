@@ -54,7 +54,7 @@ export default {
           },
           y: {
             type: 'logarithmic',
-            min: 50000,
+            min: 40000,
             max: this.maxY,
             ticks: {
               callback: function (value) {
