@@ -55,7 +55,7 @@ export default {
           y: {
             type: 'logarithmic',
             min: 50000,
-            max: this.maxVal,
+            max: 1e8,
             ticks: {
               callback: function (value) {
                 const exp = Math.log10(value);
@@ -99,10 +99,6 @@ export default {
           barThickness: 11,
         }]
       }
-    },
-    maxY() {
-      const maxVal = Math.max(this.predicted_TX, this.observed_TX);
-      return maxVal > 1e8 ? undefined : 1e8;
     }
   }
 }
