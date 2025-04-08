@@ -84,20 +84,6 @@ export default {
               bottom: 20
             }
           }
-        },
-        annotation: {
-          annotations: [{
-            type: 'line',
-            mode: 'horizontal',
-            scaleID: 'y-axis-0',
-            value: 1000000,
-            borderColor: 'rgb(255, 0, 0)',
-            borderWidth: 1,
-            // label: {
-            //   enabled: false,
-            //   content: ''
-            // }
-          }]
         }
       }
     }
