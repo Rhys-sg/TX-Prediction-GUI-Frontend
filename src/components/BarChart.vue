@@ -53,15 +53,16 @@ export default {
             }
           },
           y: {
-            type: 'linear',
+            type: 'logarithmic',
             min: 50000,
+            max: 1e8,
             ticks: {
-              callback: function(value) {
+              callback: function (value) {
                 const exp = Math.log10(value);
-                if (exp % 1 === 0) {
+                if (Number.isInteger(exp)) {
                   return `10^${exp}`;
                 }
-                return '';
+                return null;
               }
             },
             grid: {
