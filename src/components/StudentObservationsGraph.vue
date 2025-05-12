@@ -23,6 +23,7 @@
     },
     methods: {
       renderGraph() {
+        console.log('graphData:', this.graphData);
         const ctx = this.$refs.graphCanvas.getContext('2d');
   
         if (this.chartInstance) {
